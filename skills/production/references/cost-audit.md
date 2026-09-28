@@ -9,7 +9,7 @@ Can the product run without a surprise bill ending it? This covers spend visibil
 ## Evidence
 
 - **Automated:** the list of paid services from configuration and dependencies; provider usage and billing APIs where credentials allow; cost-related configuration (caps, quotas, rate limits).
-- **Manual:** estimate cost per active user from provider pricing (anchored with links) and expected usage. Compare with the product's price (`blueprint/business.md` if present).
+- **Manual:** estimate cost per active user from provider pricing (anchored with links) and expected usage. Compare with the product's price (from the project's pricing page or any stated business model).
 
 ## Checks
 

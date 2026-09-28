@@ -31,11 +31,11 @@ Check every passage you keep as a record of the build against the code, database
 
 ## 4. Run the cycle
 
-Create `blueprint/README.md` and `workbook.md` from the templates. Seed each document's Discuss stage with its extracted intent, list the gaps (sections the legacy material never covered: often economics, kill criteria, quality bar and non-goals), and take each document through Research, Draft, Review and Approve with the owner. Expect the result to be far shorter than the legacy set, and more complete where it counts.
+Create the blueprint's `README.md` and `workbook.md` from the templates, in the folder the owner chose. Seed each document's Discuss stage with its extracted intent, list the gaps (sections the legacy material never covered: often economics, kill criteria, quality bar and non-goals), and take each document through Research, Draft, Review and Approve with the owner. Expect the result to be far shorter than the legacy set, and more complete where it counts.
 
 ## 5. Retire the old set
 
-Move the legacy material **out of every loader's path**: an archive folder excluded from agent context, a tagged commit before removal, or deletion if the owner prefers (version control keeps it). Then repoint everything found in step 1 at `blueprint/README.md`, and search again for every legacy filename. No live reference should remain outside the archive. Two competing sources of intent are worse than either alone.
+Move the legacy material **out of every loader's path**: an archive folder excluded from agent context, a tagged commit before removal, or deletion if the owner prefers (version control keeps it). Then repoint everything found in step 1 at the blueprint's `README.md`, and search again for every legacy filename. No live reference should remain outside the archive. Two competing sources of intent are worse than either alone.
 
 ## 6. Report
 

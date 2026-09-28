@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Agent skills for building software products: blueprint and production.",
-    "version": "1.0.0"
+    "version": "1.0.1"
   },
   "plugins": [
     {
@@ -13,7 +13,7 @@
       "description": "blueprint: establish a project's foundation with its owner. production: autonomous production readiness audit with go/no-go.",
       "source": "./",
       "strict": false,
-      "version": "1.0.0",
+      "version": "1.0.1",
       "license": "MIT",
       "skills": [
         "./skills/blueprint",

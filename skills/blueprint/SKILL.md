@@ -4,7 +4,7 @@ description: "Establish a project's blueprint together with its owner: seven doc
 license: MIT
 metadata:
   author: miisodev
-  version: "1.0.0"
+  version: "1.0.1"
 ---
 
 # Blueprint
@@ -32,7 +32,7 @@ An owner's decision that *looks* like design stays, stated as the requirement it
 ## Files
 
 ```
-blueprint/
+<blueprint folder>/
   README.md       index: what the blueprint is, reading order, each document's status
   vision.md
   market.md
@@ -45,7 +45,9 @@ blueprint/
   research/       evidence: one file per topic, sources dated; models (e.g. economics) kept runnable
 ```
 
-Use `blueprint/` at the repository root unless the project already has a convention. Create `README.md` and `workbook.md` from `assets/index-template.md` and `assets/workbook-template.md` when the work begins.
+**Where the folder lives is the project's choice, not this skill's.** Find an existing blueprint by looking for its index (a `README.md` listing the seven documents) or the documents themselves, wherever they are. If there is none, ask the owner where it should live, recommending the project's existing convention for agent context, or `blueprint/` at the root when there is no convention. Create `README.md` and `workbook.md` from `assets/index-template.md` and `assets/workbook-template.md` when the work begins.
+
+**What the skill does hold to is completeness.** The index lists all seven documents with a status each, every listed file exists, and nothing else in the folder claims to be intent. A missing document is shown as Not started, never left out.
 
 The documents hold conclusions. The workbook holds the process. `research/` holds the evidence. Keeping them apart is what lets the documents stay short and decided while nothing that was learned is lost.
 
@@ -79,7 +81,7 @@ This is deliberately not a one-shot. A thorough blueprint usually takes several 
 
 ### Starting and resuming
 
-At the start of any session, read `blueprint/README.md` and `blueprint/workbook.md` if they exist, plus any documents in progress. Tell the owner where things stand and what you recommend doing next, and ask. With no blueprint yet, begin with the owner's idea in their own words, gather what already exists (repository, README, docs, prior specs, live site or store listing), create the index and workbook, and start Discuss on `vision.md`.
+At the start of any session, find the blueprint's `README.md` and `workbook.md` and read them if they exist, plus any documents in progress. Tell the owner where things stand and what you recommend doing next, and ask. With no blueprint yet, begin with the owner's idea in their own words, gather what already exists (repository, README, docs, prior specs, live site or store listing), create the index and workbook, and start Discuss on `vision.md`.
 
 When there is nobody to collaborate with (an autonomous run, an owner who asks for a quick draft), you may draft ahead. Record every choice made on the owner's behalf in the workbook as an open question with your recommendation, leave each document at Review rather than Approved, and say so.
 
@@ -97,7 +99,7 @@ When there is nobody to collaborate with (an autonomous run, an owner who asks f
 
 A blueprint changes when **intent** changes: a new market, a new price, a requirement that proved wrong, a new constraint. Progress alone is never a reason to touch it. Take a revision through the same cycle at the scale it needs. A price change gets a short discussion, research, a draft, a review and approval, and then a check of every document that references the changed facts.
 
-Point the project's agent instruction files (e.g., `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `.cursor/rules`, `.github/copilot-instructions.md`, whichever exist) at `blueprint/README.md` with one line saying it is the source of intent and should be read before making product, design or architecture decisions. Don't copy content into them.
+Point the project's agent instruction files (e.g., `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `.cursor/rules`, `.github/copilot-instructions.md`, whichever exist) at the blueprint's `README.md` with one line saying it is the source of intent and should be read before making product, design or architecture decisions. Don't copy content into them.
 
 ## Adopting existing material
 
@@ -118,4 +120,4 @@ When a project already has PRDs, specs, business plans or design docs, `referenc
 | `references/research.md` | Any Research-and-compute stage: evidence standards, market sizing, competitor analysis, economic models |
 | `references/review.md` | Every Review stage, and whenever asked to check a blueprint |
 | `references/migration.md` | Adopting an existing spec library, PRD or business plan |
-| `assets/index-template.md`, `assets/workbook-template.md` | Creating `blueprint/README.md` and `blueprint/workbook.md` |
+| `assets/index-template.md`, `assets/workbook-template.md` | Creating the blueprint's `README.md` and `workbook.md` |

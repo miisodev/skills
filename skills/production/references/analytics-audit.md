@@ -27,7 +27,7 @@ Will the team know whether the product is working as a business: who arrives, wh
 | ANL-05 | Revenue events come from the server or billing provider (not the client) and reconcile with the provider (BIL-20) | Code; compare a sample | Medium |
 | ANL-06 | Acquisition, activation, conversion and retention funnels are defined and measurable step by step | Funnel definitions | Medium |
 | ANL-07 | Attribution (UTM parameters, referrer, campaign) is captured and carried through to signup | Test link with UTM | Low |
-| ANL-08 | The product's success measures (blueprint `product.md` or equivalent) can be answered from the data | Map each metric to events | Medium |
+| ANL-08 | The product's success measures (from the project's stated requirements, wherever they live) can be answered from the data | Map each metric to events | Medium |
 | ANL-09 | Client and server events are not double-counted, and identity is stitched across anonymous → signed-in and across devices | Inspect identify calls | Medium |
 
 ### Integrity and compliance

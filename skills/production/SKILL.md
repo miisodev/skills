@@ -4,7 +4,7 @@ description: "Autonomous production readiness audit for software products. In on
 license: MIT
 metadata:
   author: miisodev
-  version: "1.0.0"
+  version: "1.0.1"
 ---
 
 # Production readiness
@@ -17,7 +17,7 @@ The skill is independent of stack, vendor, region and agent harness. Tools and v
 
 This is designed to be one long, thorough run. Work through the phases below until every applicable check has a recorded result, then produce the deliverables. Do not stop partway to ask questions. When something is ambiguous, make the most reasonable assumption, record it in `run.assumptions`, and continue. A wrong assumption stated plainly is easy for the owner to correct. A run that stops halfway gives them nothing.
 
-1. **Scope.** Choose the profile from the request (table below); default to **Pre-Launch Gate** for an unlaunched product and **Full Audit** for a live one. Establish what the product is, who uses it and where (`product.markets` drives privacy, tax, accessibility and consumer law), and what environments you can reach. If a `blueprint/` folder exists, read it: `product.md` is the requirements standard for the functional part, and `business.md`, `brand.md` and `stack.md` inform billing, cost, brand and infrastructure.
+1. **Scope.** Choose the profile from the request (table below); default to **Pre-Launch Gate** for an unlaunched product and **Full Audit** for a live one. Establish what the product is, who uses it and where (`product.markets` drives privacy, tax, accessibility and consumer law), and what environments you can reach. Then reconnoitre the project for its stated intent, wherever it lives and whatever it is called: a blueprint, PRD, spec, business plan, brand brief, agent instruction files (`AGENTS.md`, `CLAUDE.md`, `GEMINI.md` and the like, which often point at the rest), READMEs, docs, the pricing page and store listings. Assume no folder or file name. Record in `run.assumptions` what you found and used, and where. The strongest statement of requirements found is the standard for the functional part; statements of pricing, brand and stack inform billing, cost, brand and infrastructure. Where there is none, derive the standard from the product's public claims.
 2. **Inventory surfaces.** Find every surface the product exposes (catalogue below) from the repository, deploy configuration, DNS, app manifests, package manifests and docs. Record each in `surfaces` with a stable id, and mark which are core.
 3. **Decide applicability.** For each of the 32 parts, decide whether it applies. Record every part that does not apply in `parts` with the reason. Anything not declared inapplicable must be assessed.
 4. **Gather evidence.** Automated evidence first: run the project's own build, tests, linters and scanners, then the checks each reference lists. Then manual evidence: read code, walk journeys, probe endpoints and inspect pages, within the safety limits below. Each part's reference file lists its evidence sources.

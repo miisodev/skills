@@ -18,7 +18,7 @@ When you have no web or data access, say so. Ask the owner for sources or access
 
 ## Where research lives
 
-One file per topic in `blueprint/research/`, named for the topic (`competitors.md`, `market-size.md`, `pricing.md`, `interviews.md`, `name-check.md`, `economics.py` or `economics.xlsx`). Each note opens with the question it answers and the date. It then gives findings with sources, and ends with the conclusion carried into the blueprint. The documents cite the file: `(research/market-size.md)`. Add each new file to the workbook's research log.
+One file per topic in the blueprint's `research/` folder, named for the topic (`competitors.md`, `market-size.md`, `pricing.md`, `interviews.md`, `name-check.md`, `economics.py` or `economics.xlsx`). Each note opens with the question it answers and the date. It then gives findings with sources, and ends with the conclusion carried into the blueprint. The documents cite the file: `(research/market-size.md)`. Add each new file to the workbook's research log.
 
 ## Market sizing
 

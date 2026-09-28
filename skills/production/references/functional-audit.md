@@ -1,6 +1,6 @@
 # Functional audit
 
-Does the product do what it claims, correctly, for the people it is for? Every other part assumes the product works. This part checks it: critical journeys complete end to end, business rules produce the right results, and the product meets its stated requirements. Where a `blueprint/product.md` or other requirements document exists, it is the standard. Otherwise, derive the requirements from the marketing claims, onboarding, docs and pricing page, because those are the promises users hold the product to.
+Does the product do what it claims, correctly, for the people it is for? Every other part assumes the product works. This part checks it: critical journeys complete end to end, business rules produce the right results, and the product meets its stated requirements. Where the project states its requirements (a blueprint's product document, a PRD or spec, wherever it lives), that is the standard. Otherwise, derive the requirements from the marketing claims, onboarding, docs and pricing page, because those are the promises users hold the product to.
 
 - **Check prefix:** `FUN`
 - **Applies to:** every user-facing surface (web app, mobile app, desktop app, admin console, public API, CLI/SDK, extension)

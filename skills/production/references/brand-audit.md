@@ -1,6 +1,6 @@
 # Brand audit
 
-Does every surface look and sound like the same product, a finished one that belongs to the owner and not to a template? Where a `blueprint/brand.md` exists, it is the standard for name, voice and visual direction. Otherwise, use the product's own strongest surface as the reference.
+Does every surface look and sound like the same product, a finished one that belongs to the owner and not to a template? Where the project states its brand (a blueprint's brand document, a brand brief or guidelines, wherever they live), that is the standard for name, voice and visual direction. Otherwise, use the product's own strongest surface as the reference.
 
 - **Check prefix:** `BRD`
 - **Applies to:** marketing site, web app, admin console (lightly), mobile app, desktop app, extension, emails, docs, store listings, social profiles
@@ -35,7 +35,7 @@ Does every surface look and sound like the same product, a finished one that bel
 | BRD-09 | The product's visual design matches the marketing site's promise (users do not land in a different-looking product after signup) | Compare | Medium |
 | BRD-10 | Emails, PDFs and invoices use the brand (logo, colours, sender name) | Samples | Low |
 | BRD-11 | Imagery and illustration style is consistent, licensed and on-brand | Review | Low |
-| BRD-12 | Visual direction and fixed choices in the brand brief (if any) are honoured | Compare with blueprint `brand.md` | Medium |
+| BRD-12 | Visual direction and fixed choices in the brand brief (if any) are honoured | Compare with the project's stated brand direction | Medium |
 
 ## Severity notes
 

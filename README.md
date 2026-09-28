@@ -52,7 +52,7 @@ Update later with `npx skills update`.
 | [**blueprint**](skills/blueprint/SKILL.md) | Establishes a project's foundation together with you in seven documents: vision, market, business, product, brand, stack and plan. It covers the core idea, market research and strategy, the business model and unit economics, targets, requirements, brand, stack, resources and the grand plan. Each document is discussed, researched and computed, drafted, critiqued and approved by you, with a workbook so the work resumes in any session. It sets intent and leaves design and implementation to the model that builds. | "Let's blueprint this idea" · "Continue the blueprint" · "Our pricing changed, update the blueprint" · "Turn our PRDs into a blueprint" |
 | [**production**](skills/production/SKILL.md) | An autonomous production readiness audit. In one run it inventories every surface and assesses 32 parts with 604 evidence-backed checks, from functional correctness, security and identity to billing, privacy, accessibility, AI, mobile and launch. It returns a structured JSON payload and report that rank parts and surfaces by risk, with a GO, GO WITH CONDITIONS, HOLD or NO-GO decision per surface and overall. | "Is this ready to launch?" · "Run a production readiness audit" · "Give me a go/no-go for the v2 release" · "Are these screens actually finished?" |
 
-They work well together: the blueprint's `product.md` becomes the requirements standard the production audit checks against.
+They work well together: the production audit finds the blueprint wherever the project keeps it, and its `product.md` becomes the requirements standard the audit checks against.
 
 ### Requirements
 
