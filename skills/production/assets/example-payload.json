@@ -1,0 +1,153 @@
+{
+  "schema_version": "1.0",
+  "product": {
+    "name": "Ledgerly",
+    "description": "Bookkeeping SaaS for sole traders, with a companion mobile app for receipts.",
+    "types": [
+      "saas",
+      "mobile-app"
+    ],
+    "repository": "github.com/example/ledgerly",
+    "markets": [
+      "EU",
+      "UK"
+    ]
+  },
+  "run": {
+    "date": "2026-09-28",
+    "profile": "spot-audit",
+    "auditor": "coding agent (autonomous run)",
+    "environments_examined": [
+      "repository",
+      "staging",
+      "production (read-only probes)"
+    ],
+    "assumptions": [
+      "EU and UK consumers are in scope because pricing is shown in EUR and GBP."
+    ],
+    "limitations": [
+      "No access to the payment provider dashboard.",
+      "No production credentials; destructive and live-payment tests not run."
+    ],
+    "parts_in_scope": [
+      "security",
+      "identity"
+    ]
+  },
+  "summary": "Illustrative example only. Ledgerly's identity and data isolation are solid on the web app, but a service-role key ships in the mobile bundle and the production smoke test has not been run.",
+  "surfaces": [
+    {
+      "id": "web-app",
+      "name": "Web app",
+      "kind": "web-app",
+      "location": "https://app.ledgerly.example",
+      "core": true
+    },
+    {
+      "id": "ios-android",
+      "name": "Mobile app",
+      "kind": "mobile-app",
+      "core": true
+    }
+  ],
+  "parts": [],
+  "checks": [
+    {
+      "id": "SEC-10",
+      "surface": "all",
+      "status": "pass",
+      "severity": "critical",
+      "evidence": "gitleaks detect over the working tree and 412 commits: 0 findings.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "SEC-11",
+      "surface": "ios-android",
+      "status": "fail",
+      "severity": "critical",
+      "core_flow": true,
+      "evidence": "EXPO_PUBLIC_SUPABASE_SERVICE_KEY is read in app/lib/db.ts:4 and present in the built bundle.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "SEC-15",
+      "surface": "web-app",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "curl -I shows HSTS max-age=31536000; no mixed content on core pages.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "SEC-16",
+      "surface": "web-app",
+      "status": "partial",
+      "severity": "medium",
+      "evidence": "CSP set but includes 'unsafe-inline' for scripts.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "IDN-14",
+      "surface": "web-app",
+      "status": "pass",
+      "severity": "critical",
+      "core_flow": true,
+      "evidence": "Replayed 23 object requests with account B's session: all 404.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "IDN-06",
+      "surface": "web-app",
+      "status": "fail",
+      "severity": "high",
+      "evidence": "20 failed logins in 60 s on staging: no delay, no lockout.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "IDN-07",
+      "surface": "web-app",
+      "status": "not_verified",
+      "severity": "critical",
+      "core_flow": true,
+      "evidence": "Admin MFA enforcement is configured in the auth provider dashboard, which was not accessible.",
+      "evidence_type": "inferred"
+    }
+  ],
+  "findings": [
+    {
+      "id": "F-01",
+      "title": "Service-role key shipped in the mobile app",
+      "severity": "critical",
+      "checks": [
+        "SEC-11"
+      ],
+      "surfaces": [
+        "ios-android"
+      ],
+      "evidence": "app/lib/db.ts:4 reads EXPO_PUBLIC_SUPABASE_SERVICE_KEY; the key string is present in the release bundle.",
+      "user_impact": "Anyone who unpacks the app can read and modify every user's books.",
+      "business_impact": "Total data breach risk; store removal; regulator notification under GDPR.",
+      "recommendation": "Rotate the key now. Move privileged operations behind authenticated server endpoints; the app uses only the anon key with row-level security.",
+      "effort": "M",
+      "owner": "unassigned",
+      "validation": "Key absent from a fresh release bundle; old key revoked; RLS tests pass with the anon key."
+    },
+    {
+      "id": "F-02",
+      "title": "No brute-force protection on login",
+      "severity": "high",
+      "checks": [
+        "IDN-06"
+      ],
+      "surfaces": [
+        "web-app"
+      ],
+      "evidence": "20 failed attempts in 60 s accepted on staging.",
+      "user_impact": "Accounts with weak passwords can be guessed.",
+      "business_impact": "Account takeover and support load.",
+      "recommendation": "Add per-account and per-IP rate limiting with progressive delay on login and reset.",
+      "effort": "S",
+      "owner": "unassigned",
+      "validation": "The 6th failed attempt within a minute returns 429."
+    }
+  ]
+}

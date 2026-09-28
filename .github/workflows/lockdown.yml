@@ -1,0 +1,22 @@
+name: Close pull requests
+
+on:
+  pull_request_target:
+    types: opened
+
+permissions:
+  pull-requests: write
+
+jobs:
+  lockdown:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: dessant/repo-lockdown@17c2cc64a91eff426f242b05dd523c6f098889b6 # v5.0.2
+        with:
+          process-only: prs
+          pr-comment: >
+            Thanks for your interest. This repository does not accept contributions,
+            so this pull request has been closed. The skills are MIT licensed: fork the
+            repository and adapt your copy however you like.
+          close-pr: true
+          lock-pr: true

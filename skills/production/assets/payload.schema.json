@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "production-readiness-payload/1.0",
+  "title": "Production readiness payload",
+  "description": "What the auditing agent records. scripts/readiness.py validates it, computes scores, rankings and the decision, and renders the report.",
+  "type": "object",
+  "required": ["schema_version", "product", "run", "surfaces", "checks"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "product": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": {"type": "string"},
+        "description": {"type": "string"},
+        "types": {"type": "array", "items": {"type": "string"}, "description": "e.g. saas, marketing-site, mobile-app, desktop-app, api, cli, extension, internal-tool"},
+        "repository": {"type": "string"},
+        "markets": {"type": "array", "items": {"type": "string"}, "description": "Where users are; drives privacy, tax, accessibility and consumer law"}
+      }
+    },
+    "run": {
+      "type": "object",
+      "required": ["date", "profile"],
+      "properties": {
+        "date": {"type": "string", "format": "date"},
+        "profile": {"enum": ["pre-launch-gate", "release-gate", "full-audit", "design-review", "spot-audit", "post-launch-health-check"]},
+        "parts_in_scope": {
+          "description": "\"all\" (default) or the part ids this profile covers; other parts are reported as out of scope",
+          "oneOf": [{"const": "all"}, {"type": "array", "items": {"$ref": "#/$defs/partId"}}]
+        },
+        "auditor": {"type": "string"},
+        "environments_examined": {"type": "array", "items": {"type": "string"}},
+        "assumptions": {"type": "array", "items": {"type": "string"}},
+        "limitations": {"type": "array", "items": {"type": "string"}},
+        "re_review": {"type": "string"}
+      }
+    },
+    "summary": {"type": "string", "description": "Executive summary in prose: overall state, the blockers, what to do first"},
+    "surfaces": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "kind"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z0-9-]+$", "not": {"const": "all"}},
+          "name": {"type": "string"},
+          "kind": {"enum": ["marketing-site", "web-app", "admin-console", "public-api", "webhooks", "background-jobs", "data-pipeline", "mobile-app", "desktop-app", "extension", "cli", "sdk-library", "messaging", "docs", "store-listing", "integration", "other"]},
+          "location": {"type": "string"},
+          "core": {"type": "boolean", "description": "True when users depend on this surface for the product's core value"},
+          "notes": {"type": "string"}
+        }
+      }
+    },
+    "parts": {
+      "type": "array",
+      "description": "Declare parts that do not apply, with the reason",
+      "items": {
+        "type": "object",
+        "required": ["id", "applicable"],
+        "properties": {
+          "id": {"$ref": "#/$defs/partId"},
+          "applicable": {"type": "boolean"},
+          "reason": {"type": "string"}
+        }
+      }
+    },
+    "checks": {
+      "type": "array",
+      "description": "One result per check per surface. Use surface \"all\" for product-wide checks.",
+      "items": {
+        "type": "object",
+        "required": ["id", "status"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[A-Z][A-Z0-9]{1,3}-C?\\d{2,3}$", "description": "Reference check id (SEC-04) or custom (SEC-C01)"},
+          "surface": {"type": "string", "default": "all"},
+          "status": {"enum": ["pass", "partial", "fail", "not_verified", "not_applicable"]},
+          "severity": {"enum": ["critical", "high", "medium", "low"], "description": "Severity if the check is not passing, after applying the part's severity notes"},
+          "core_flow": {"type": "boolean", "description": "The check protects auth, payment, the primary value action or data integrity"},
+          "evidence": {"type": "string", "description": "What was observed (command, output, file:line, measurement) or why it could not be verified / does not apply"},
+          "evidence_type": {"enum": ["observed", "inferred", "documented"]},
+          "risk_accepted_by": {"type": ["string", "null"], "description": "Only when the owner has accepted the risk in writing"}
+        }
+      }
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "severity", "checks", "recommendation"],
+        "properties": {
+          "id": {"type": "string"},
+          "title": {"type": "string"},
+          "severity": {"enum": ["critical", "high", "medium", "low"]},
+          "checks": {"type": "array", "items": {"type": "string"}},
+          "surfaces": {"type": "array", "items": {"type": "string"}},
+          "evidence": {"type": "string"},
+          "user_impact": {"type": "string"},
+          "business_impact": {"type": "string"},
+          "recommendation": {"type": "string"},
+          "effort": {"enum": ["S", "M", "L"]},
+          "owner": {"type": "string", "default": "unassigned"},
+          "validation": {"type": "string"}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "partId": {"enum": ["functional", "ux", "design", "accessibility", "content", "localization", "compatibility", "performance", "reliability", "observability", "infrastructure", "cost", "engineering", "security", "identity", "data", "privacy", "safety", "ai", "api", "billing", "messaging", "support", "analytics", "seo", "brand", "legal", "mobile", "desktop", "extension", "package", "launch"]}
+  }
+}

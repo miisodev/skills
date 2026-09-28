@@ -1,0 +1,24 @@
+{
+  "name": "miisodev-skills",
+  "owner": {
+    "name": "miisodev"
+  },
+  "metadata": {
+    "description": "Agent skills for building software products: blueprint and production.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "miisodev-skills",
+      "description": "blueprint: establish a project's foundation with its owner. production: autonomous production readiness audit with go/no-go.",
+      "source": "./",
+      "strict": false,
+      "version": "1.0.0",
+      "license": "MIT",
+      "skills": [
+        "./skills/blueprint",
+        "./skills/production"
+      ]
+    }
+  ]
+}
