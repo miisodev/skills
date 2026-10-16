@@ -5,3 +5,6 @@ Thumbs.db
 production-readiness/
 *-workspace/
 *.agents/
+AGENTS.md
+CLAUDE.md
+GEMINI.md
