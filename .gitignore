@@ -6,5 +6,6 @@ production-readiness/
 *-workspace/
 *.agents/
 AGENTS.md
+GOTCHAS.md
 CLAUDE.md
 GEMINI.md
