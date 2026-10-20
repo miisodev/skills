@@ -13,7 +13,7 @@ All notable changes to these skills are documented here. Versions follow [Semant
 
 ### Distribution
 
-- Link the MCPRush publisher home for BrainLLM and both skills. Both skill package versions move together; blueprint behavior is unchanged.
+- Link the MCPRush publisher home and individual listings for BrainLLM and both skills; identify the repository commands as the complete-package install path. Both skill package versions move together; blueprint behavior is unchanged.
 
 ## [1.0.1] - 2026-09-28
 

@@ -10,7 +10,7 @@ Agent skills for building software products, from the first idea to the go/no-go
 
 The skills are plain Markdown following the open [Agent Skills](https://agentskills.io/) specification. They work in Claude Code, Codex, Cursor, Gemini CLI, GitHub Copilot, OpenCode, Windsurf and [every other agent the `skills` CLI supports](https://github.com/vercel-labs/skills#supported-agents). They are independent of stack, vendor and region.
 
-Find these skills and BrainLLM on [MCPRush](https://mcprush.com/miisodev).
+Find [blueprint](https://mcprush.com/miisodev/blueprint), [production](https://mcprush.com/miisodev/production) and [BrainLLM](https://mcprush.com/miisodev/brainllm-mcp) together on the [MCPRush publisher page](https://mcprush.com/miisodev). The commands below install the complete skill folders from this repository.
 
 ## Install
 
@@ -52,9 +52,25 @@ Update later with `npx skills update`.
 | Skill | What it does | Try |
 |---|---|---|
 | [**blueprint**](skills/blueprint/SKILL.md) | Establishes a project's foundation together with you in seven documents: vision, market, business, product, brand, stack and plan. It covers the core idea, market research and strategy, the business model and unit economics, targets, requirements, brand, stack, resources and the grand plan. Each document is discussed, researched and computed, drafted, critiqued and approved by you, with a workbook so the work resumes in any session. It sets intent and leaves design and implementation to the model that builds. | "Let's blueprint this idea" · "Continue the blueprint" · "Our pricing changed, update the blueprint" · "Turn our PRDs into a blueprint" |
-| [**production**](skills/production/SKILL.md) | An autonomous production readiness audit. In one run it inventories every surface and assesses 39 parts with 753 evidence-backed checks, from functional correctness, security and identity to billing, privacy, accessibility, AI, mobile and launch, including dedicated checks for MCP, agent execution, self-hosted deployment, offline sync, real-time systems, devices and supply chains. It returns a structured JSON payload and report that rank parts and surfaces by risk, with a GO, GO WITH CONDITIONS, HOLD or NO-GO decision per surface and overall. | "Is this ready to launch?" · "Run a production readiness audit" · "Give me a go/no-go for the v2 release" · "Are these screens actually finished?" · "Audit this MCP server before release" |
+| [**production**](skills/production/SKILL.md) | An autonomous readiness audit across 39 parts with 753 evidence-backed checks. It inventories surfaces, assesses applicable checks and returns a structured JSON payload and report ranking parts and surfaces by risk. Decisions are GO, GO WITH CONDITIONS, HOLD or NO-GO per surface and overall. | "Is this ready to launch?" · "Run a production readiness audit" · "Give me a go/no-go for the v2 release" · "Are these screens actually finished?" · "Audit this MCP server before release" |
 
 They work well together: the production audit finds the blueprint wherever the project keeps it, and its `product.md` becomes the requirements standard the audit checks against.
+
+### Production coverage
+
+The shared checks cover functional behavior, UX, accessibility, security, identity, data, privacy, reliability, operations, AI, billing and launch. Version 1.1.0 adds dedicated coverage for:
+
+| Boundary | What the audit examines |
+|---|---|
+| MCP servers, clients and hosts | Protocol versions, tool/resource contracts, permissions, transports and supported extensions |
+| Agents and automation | Delegated authority, approvals, budgets, cancellation and recovery without duplicated actions |
+| Self-hosted deployments | Installation, configuration, upgrades, recovery and disconnected operation |
+| Offline synchronization | Durable local work, conflicts, reconnects and revoked access |
+| Real-time and event systems | Delivery guarantees, stream access, backpressure and replay |
+| Device and embedded software | Identity, pairing, authenticated updates and failure recovery |
+| Software supply chains | Build provenance, artifact verification and compromised-release response |
+
+Apply these to the capabilities a product actually has. A static site does not need billing; a local MCP server does not need a cloud deployment. Existing mobile, desktop, extension and package checks remain, with added data-pipeline, model-lifecycle, SDK/CLI and non-web accessibility checks. See the [product routing guide](skills/production/references/product-routing.md).
 
 ### Requirements
 
