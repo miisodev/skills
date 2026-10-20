@@ -13,7 +13,7 @@
       "properties": {
         "name": {"type": "string"},
         "description": {"type": "string"},
-        "types": {"type": "array", "items": {"type": "string"}, "description": "e.g. saas, marketing-site, mobile-app, desktop-app, api, cli, extension, internal-tool"},
+        "types": {"type": "array", "items": {"type": "string"}, "description": "e.g. saas, marketing-site, mobile-app, desktop-app, api, cli, extension, internal-tool, mcp, agent, self-hosted, offline-first, game, embedded"},
         "repository": {"type": "string"},
         "markets": {"type": "array", "items": {"type": "string"}, "description": "Where users are; drives privacy, tax, accessibility and consumer law"}
       }
@@ -44,7 +44,7 @@
         "properties": {
           "id": {"type": "string", "pattern": "^[a-z0-9-]+$", "not": {"const": "all"}},
           "name": {"type": "string"},
-          "kind": {"enum": ["marketing-site", "web-app", "admin-console", "public-api", "webhooks", "background-jobs", "data-pipeline", "mobile-app", "desktop-app", "extension", "cli", "sdk-library", "messaging", "docs", "store-listing", "integration", "other"]},
+          "kind": {"enum": ["marketing-site", "web-app", "admin-console", "public-api", "webhooks", "background-jobs", "data-pipeline", "mobile-app", "desktop-app", "extension", "cli", "sdk-library", "messaging", "docs", "store-listing", "integration", "mcp-server", "mcp-client", "agent-runtime", "self-hosted-service", "realtime-service", "device-firmware", "game", "spatial-app", "other"]},
           "location": {"type": "string"},
           "core": {"type": "boolean", "description": "True when users depend on this surface for the product's core value"},
           "notes": {"type": "string"}
@@ -105,6 +105,6 @@
     }
   },
   "$defs": {
-    "partId": {"enum": ["functional", "ux", "design", "accessibility", "content", "localization", "compatibility", "performance", "reliability", "observability", "infrastructure", "cost", "engineering", "security", "identity", "data", "privacy", "safety", "ai", "api", "billing", "messaging", "support", "analytics", "seo", "brand", "legal", "mobile", "desktop", "extension", "package", "launch"]}
+    "partId": {"enum": ["functional", "ux", "design", "accessibility", "content", "localization", "compatibility", "performance", "reliability", "observability", "infrastructure", "cost", "engineering", "security", "identity", "data", "privacy", "safety", "ai", "api", "billing", "messaging", "support", "analytics", "seo", "brand", "legal", "mobile", "desktop", "extension", "package", "launch", "mcp", "agent", "deployment", "sync", "realtime", "device", "supply-chain"]}
   }
 }

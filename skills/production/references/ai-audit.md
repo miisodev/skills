@@ -1,10 +1,10 @@
 # AI audit
 
-If the product calls a language model or other ML system, are those features secure, reliable, affordable, honest and measured? Model output is probabilistic and model inputs can be hostile, so AI features need their own checks on top of the rest. This part follows the OWASP Top 10 for LLM Applications (2025) and adds quality, cost and transparency checks.
+If the product calls a language model or other ML system, are those features secure, reliable, affordable, honest and measured? Model output is probabilistic and model inputs can be hostile, so AI features need their own checks on top of the rest. The security rows retain the 2025 OWASP LLM risk baseline and add quality, cost and transparency checks. They are not a complete mapping to later editions; consult the dated sources and assess newly relevant risks.
 
 - **Check prefix:** `AIF`
-- **Applies to:** any surface exposing a model-backed feature: chat, generation, summarisation, search/RAG, agents and tool use, classification, recommendations
-- **Not applicable when:** the product uses no ML/AI features at runtime
+- **Applies to:** model training/inference pipelines and any surface exposing a model-backed feature: chat, generation, summarisation, search/RAG, agents and tool use, classification, recommendations
+- **Not applicable when:** the product neither trains, distributes nor operates an ML/AI feature
 
 ## Evidence
 
@@ -48,6 +48,19 @@ If the product calls a language model or other ML system, are those features sec
 | AIF-18 | Prompts, completions and tool calls are logged for debugging and abuse review, with PII handling matching the privacy policy | Logging config | Medium |
 | AIF-19 | Use cases that affect people's access to jobs, credit, housing, education or essential services are classified for regulatory risk (EU AI Act high-risk, US state laws) and have human oversight | Review | High where applicable |
 
+### Additional platform and lifecycle checks
+
+| ID | Check | Verify | Severity |
+|---|---|---|---|
+| AIF-20 | Training/evaluation data provenance, permissions and contamination risks are known | Inspect dataset lineage and train/eval separation | High |
+| AIF-21 | Model quality is measured by relevant cohorts and monitored for input/output drift | Inspect cohort evals, drift thresholds and response ownership | High |
+| AIF-22 | A model or index rollback restores a compatible preprocessing, embedding and feature pipeline | Switch versions in a test deployment and compare outputs | High |
+| AIF-23 | Inference handles missing features, out-of-distribution inputs and low confidence with defined fallback | Run representative boundary/abstention fixtures | High |
+
 ## Severity notes
 
 Prompt injection that reaches another user's data or an irreversible action is Critical. A missing eval set is High only where AI is the core value. Otherwise it is Medium.
+
+## Sources for this revision
+
+Reviewed 2026-10-20: [OWASP LLM Top 10 update](https://genai.owasp.org/2026/09/01/owasp-genai-security-project-unveils-2026-top-10-for-llm-applications-new-agent-control-standard-and-sponsors-as-community-tops-30000-members/) announces a newer edition; do not present the retained baseline as current certification. Model lifecycle checks are engineering judgments. Use agent-audit for execution authority and supply-chain-audit for distributed weights/data artifacts.

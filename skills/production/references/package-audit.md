@@ -44,6 +44,15 @@ What changes when the product ships as something developers install: a CLI, an S
 | PKG-14 | The README quickstart works verbatim on a clean machine | Follow it | High |
 | PKG-15 | A changelog, licence file and contribution/security policy exist | Repository | Medium |
 
+### Additional platform and lifecycle checks
+
+| ID | Check | Verify | Severity |
+|---|---|---|---|
+| PKG-16 | SDK timeouts, cancellation and retry defaults bound work without repeating unsafe calls | Test a slow dependency, cancellation and ambiguous write outcome | High |
+| PKG-17 | Library imports have no unexpected network calls, telemetry or global process mutations | Import in a network-denied clean process and inspect effects | High |
+| PKG-18 | CLI machine output is stable and separates stdout data from stderr diagnostics | Pipe to a parser without a TTY; trigger a failure | Medium |
+| PKG-19 | Paths, quoting, signals and encoding work on the supported shell/OS matrix | Use spaces, Unicode paths, stdin and an interrupted command | Medium |
+
 ## Severity notes
 
 A secret in a published artifact is Critical and must be rotated. Unpublishing does not undo downloads or registry mirrors.

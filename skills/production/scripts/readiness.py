@@ -41,6 +41,12 @@ PARTS = {  # prefix -> (part id, display name)
     "BRD": ("brand", "Brand"), "LGL": ("legal", "Legal"), "MOB": ("mobile", "Mobile"),
     "DSK": ("desktop", "Desktop"), "EXT": ("extension", "Extension"),
     "PKG": ("package", "Package"), "LCH": ("launch", "Launch"),
+    "MCP": ("mcp", "MCP"), "AGT": ("agent", "Agent execution"),
+    "DEP": ("deployment", "Deployment and operability"),
+    "SYN": ("sync", "Offline and synchronization"),
+    "RTM": ("realtime", "Real-time and event systems"),
+    "DEV": ("device", "Device and embedded software"),
+    "SCH": ("supply-chain", "Software supply chain"),
 }
 PART_BY_ID = {pid: (prefix, name) for prefix, (pid, name) in PARTS.items()}
 ID_RE = re.compile(r"^([A-Z][A-Z0-9]{1,3})-(C?\d{2,3})$")

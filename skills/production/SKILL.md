@@ -1,10 +1,10 @@
 ---
 name: production
-description: "Autonomous production readiness audit for software products. In one long run, it inventories every surface (web, API, webhooks, jobs, mobile, desktop, extension, CLI/SDK, messaging, docs) and assesses 32 parts with about 600 evidence-backed checks: functional, UX, design, accessibility, content, localization, compatibility, performance, reliability, observability, infrastructure, cost, engineering, security, identity, data, privacy, safety, AI, API, billing, messaging, support, analytics, SEO, brand, legal, mobile, desktop, extension, package and launch. It returns a structured payload and report that rank parts and surfaces by risk and give a go/no-go recommendation per surface and overall. Use it when asked whether a product, app, site, release or feature is production-ready, launch-ready or safe to ship; for readiness, launch, security, accessibility, privacy or compliance audits; for pre-launch checklists, go/no-go decisions and post-launch health checks; or for a prioritized list of gaps and blockers."
+description: "Evidence-based production readiness audits for software products and platforms: web, APIs, mobile, desktop, CLIs/SDKs, plugins, MCP servers/clients, agents, self-hosted services, offline sync, real-time systems, games and embedded software. Inventories surfaces, selects applicable checks, and produces a structured JSON payload and risk-ranked report with GO, GO WITH CONDITIONS, HOLD or NO-GO decisions. Use for launch/release readiness, security, accessibility, privacy, reliability and operability audits, pre-launch checklists and post-launch health checks. Supports broad engineering assessment; specialist certification requires separate evidence."
 license: MIT
 metadata:
   author: miisodev
-  version: "1.0.1"
+  version: "1.1.0"
 ---
 
 # Production readiness
@@ -17,9 +17,9 @@ The skill is independent of stack, vendor, region and agent harness. Tools and v
 
 This is designed to be one long, thorough run. Work through the phases below until every applicable check has a recorded result, then produce the deliverables. Do not stop partway to ask questions. When something is ambiguous, make the most reasonable assumption, record it in `run.assumptions`, and continue. A wrong assumption stated plainly is easy for the owner to correct. A run that stops halfway gives them nothing.
 
-1. **Scope.** Choose the profile from the request (table below); default to **Pre-Launch Gate** for an unlaunched product and **Full Audit** for a live one. Establish what the product is, who uses it and where (`product.markets` drives privacy, tax, accessibility and consumer law), and what environments you can reach. Then reconnoitre the project for its stated intent, wherever it lives and whatever it is called: a blueprint, PRD, spec, business plan, brand brief, agent instruction files (`AGENTS.md`, `CLAUDE.md`, `GEMINI.md` and the like, which often point at the rest), READMEs, docs, the pricing page and store listings. Assume no folder or file name. Record in `run.assumptions` what you found and used, and where. The strongest statement of requirements found is the standard for the functional part; statements of pricing, brand and stack inform billing, cost, brand and infrastructure. Where there is none, derive the standard from the product's public claims.
-2. **Inventory surfaces.** Find every surface the product exposes (catalogue below) from the repository, deploy configuration, DNS, app manifests, package manifests and docs. Record each in `surfaces` with a stable id, and mark which are core.
-3. **Decide applicability.** For each of the 32 parts, decide whether it applies. Record every part that does not apply in `parts` with the reason. Anything not declared inapplicable must be assessed.
+1. **Scope.** Choose the profile from the request (table below); default to **Pre-Launch Gate** for an unlaunched product and **Full Audit** for a live one. Establish what the product is, who uses it and where (`product.markets` drives privacy, tax, accessibility and consumer law), and what environments you can reach. Record supported runtime/platform/protocol versions and deployment ownership, including self-hosted, offline or disconnected promises. Then reconnoitre the project for its stated intent, wherever it lives and whatever it is called: a blueprint, PRD, spec, business plan, brand brief, agent instruction files (`AGENTS.md`, `CLAUDE.md`, `GEMINI.md` and the like, which often point at the rest), READMEs, docs, the pricing page and store listings. Assume no folder or file name. Record in `run.assumptions` what you found and used, and where. The strongest statement of requirements found is the standard for the functional part; statements of pricing, brand and stack inform billing, cost, brand and infrastructure. Where there is none, derive the standard from the product's public claims.
+2. **Inventory surfaces.** Read `references/product-routing.md` to map the product and deployment model to applicable parts; product labels are starting points, never exclusions. Find every surface the product exposes (catalogue below) from the repository, deploy configuration, DNS, app manifests, package manifests and docs. Record each in `surfaces` with a stable id, and mark which are core.
+3. **Decide applicability.** Select from behavior and trust boundaries: an MCP server can need MCP checks without calling a model, a local app can need data/recovery checks without a backend, and an internal tool can need security/accessibility without billing or SEO. For each of the 39 parts, decide whether it applies. Record every part that does not apply in `parts` with the reason. Anything not declared inapplicable must be assessed.
 4. **Gather evidence.** Automated evidence first: run the project's own build, tests, linters and scanners, then the checks each reference lists. Then manual evidence: read code, walk journeys, probe endpoints and inspect pages, within the safety limits below. Each part's reference file lists its evidence sources.
 5. **Assess every check.** For each applicable part, read its reference file and record a result for **every** check on every surface it applies to: `pass`, `partial`, `fail`, `not_verified` or `not_applicable` (with the reason in `evidence`). Omitting a check hides a gap. Apply the part's severity notes to set severity, and set `core_flow: true` where the check protects authentication, payment, the primary value action or data integrity. Add custom checks (`SEC-C01`) for risks the references do not cover.
 6. **Write findings.** Every failing or partial check of Critical or High severity belongs to a finding, and lower-severity ones can be grouped into findings too. Findings carry evidence, user and business impact, a specific recommendation, effort (S/M/L), an owner ("unassigned" unless one is known; never invent names) and how the fix will be validated. Write the executive `summary` last.
@@ -45,11 +45,13 @@ Read-only probes of production are fine: fetching public pages, headers, `robots
 
 ## Evidence standard
 
-- A `pass` cites evidence: a command and its output, a test result, `file:line`, a measurement, a response header, or a named manual step. "Looks fine" is not evidence.
+- A `pass` cites evidence for the artifact, environment, version and date examined. Source-only evidence cannot prove a live provider setting or a real-device result. A `pass` cites evidence: a command and its output, a test result, `file:line`, a measurement, a response header, or a named manual step. "Looks fine" is not evidence.
 - Mark what you **observed** (ran, saw, measured) separately from what you **inferred** from code, and what is only **documented** (a policy says so). Use `evidence_type`.
 - Anything you could not check is `not_verified`. It is never silently passed and never marked `not_applicable` to make the numbers look better.
 - Prefer the project's own tooling and data (its tests, CI, analytics, monitoring) over generic tools.
 - Legal, tax and regulatory checks are engineering assessments, not legal advice. Route ambiguity to counsel in the recommendation.
+
+Read `references/standards-sources.md` when a check depends on a protocol, standard or regulated context. Use the applicable version and record the source/date. If live research is unavailable, use the bundled baseline and disclose that currentness is not verified. The scorer never fetches standards or executes probes. Product-specific safety, regulatory and platform certification remain separate evidence requirements.
 
 ## Severity
 
@@ -83,7 +85,7 @@ Risk acceptance belongs to the owner. Record `risk_accepted_by` only when the ow
 |---|---|---|
 | `pre-launch-gate` | First production launch | All applicable |
 | `full-audit` | Periodic deep review of a live product | All applicable |
-| `release-gate` | A major release on a live product | functional, security, identity, data, privacy, api, billing (if touched), reliability, observability, launch, plus the experience parts for changed surfaces |
+| `release-gate` | A major release on a live product | functional, security, identity, data, privacy, api, billing (if touched), reliability, observability, launch, plus the experience parts for changed surfaces and affected platform parts (MCP, agent, deployment, sync, realtime, device, supply-chain) |
 | `design-review` | "Is this UI finished?" | functional, ux, design, accessibility, content, localization, compatibility |
 | `spot-audit` | One concern | The relevant part(s) only |
 | `post-launch-health-check` | 1–4 weeks after launch | performance, reliability, observability, cost, analytics, billing, support, messaging |
@@ -105,11 +107,17 @@ Record every one that exists. A finding can span several surfaces, and product-w
 | `extension` | Browser extensions, platform plugins and marketplace apps |
 | `cli` / `sdk-library` | Anything installed from a registry |
 | `messaging` | Transactional and marketing email, push, SMS |
+| `mcp-server` / `mcp-client` | Local/remote MCP servers, clients, hosts, gateways and embedded MCP Apps |
+| `agent-runtime` | Agents and programmable autonomous workers |
+| `self-hosted-service` | Operator-installed services, containers and appliances |
+| `realtime-service` | Persistent connections, event streams, interactive sessions |
+| `device-firmware` | Embedded and IoT device software |
+| `game` / `spatial-app` | Game clients, consoles, XR and kiosk experiences |
 | `docs` / `store-listing` / `integration` | Help centre and developer docs; app-store and marketplace listings; third-party integrations |
 
 ## Parts
 
-Each reference file follows the same structure: purpose, check prefix, the surfaces it applies to, evidence sources, a check table (ID, check, verify, default severity) and severity notes. Read the file for every applicable part. There are 604 checks across the 32 parts.
+Each reference file follows the same structure: purpose, check prefix, the surfaces it applies to, evidence sources, a check table (ID, check, verify, default severity) and severity notes. Read the file for every applicable part. There are 753 checks across the 39 parts. This is a registry size, not a requirement to run every check for every product.
 
 | Group | Part | Prefix | Reference |
 |---|---|---|---|
@@ -144,11 +152,18 @@ Each reference file follows the same structure: purpose, check prefix, the surfa
 | | Desktop | `DSK` | `references/desktop-audit.md` |
 | | Extension | `EXT` | `references/extension-audit.md` |
 | | Package | `PKG` | `references/package-audit.md` |
+| Specialized boundaries | MCP | `MCP` | `references/mcp-audit.md` |
+| | Agent execution | `AGT` | `references/agent-audit.md` |
+| | Deployment and operability | `DEP` | `references/deployment-audit.md` |
+| | Offline and synchronization | `SYN` | `references/sync-audit.md` |
+| | Real-time and event systems | `RTM` | `references/realtime-audit.md` |
+| | Device and embedded software | `DEV` | `references/device-audit.md` |
+| | Software supply chain | `SCH` | `references/supply-chain-audit.md` |
 | Final gate | Launch | `LCH` | `references/launch-audit.md` |
 
 ## The payload
 
-`assets/payload.schema.json` defines the payload, and `assets/example-payload.json` is a small illustrative example of its shape. The example is deliberately truncated: a real payload has a result for every applicable check. In brief:
+`assets/payload.schema.json` defines the payload, and `assets/example-payload.json` is a small illustrative example of its shape. `assets/mcp-example-payload.json` illustrates a complete MCP-part spot audit with synthetic evidence. Both examples are illustrative, not audits of a real product. The original example is deliberately truncated: a real payload has a result for every applicable check. In brief:
 
 - `product`: name, description, types, markets
 - `run`: date, profile, `parts_in_scope`, environments examined, assumptions, limitations

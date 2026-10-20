@@ -10,6 +10,8 @@ Agent skills for building software products, from the first idea to the go/no-go
 
 The skills are plain Markdown following the open [Agent Skills](https://agentskills.io/) specification. They work in Claude Code, Codex, Cursor, Gemini CLI, GitHub Copilot, OpenCode, Windsurf and [every other agent the `skills` CLI supports](https://github.com/vercel-labs/skills#supported-agents). They are independent of stack, vendor and region.
 
+Find these skills and BrainLLM on [MCPRush](https://mcprush.com/miisodev).
+
 ## Install
 
 ```bash
@@ -50,7 +52,7 @@ Update later with `npx skills update`.
 | Skill | What it does | Try |
 |---|---|---|
 | [**blueprint**](skills/blueprint/SKILL.md) | Establishes a project's foundation together with you in seven documents: vision, market, business, product, brand, stack and plan. It covers the core idea, market research and strategy, the business model and unit economics, targets, requirements, brand, stack, resources and the grand plan. Each document is discussed, researched and computed, drafted, critiqued and approved by you, with a workbook so the work resumes in any session. It sets intent and leaves design and implementation to the model that builds. | "Let's blueprint this idea" · "Continue the blueprint" · "Our pricing changed, update the blueprint" · "Turn our PRDs into a blueprint" |
-| [**production**](skills/production/SKILL.md) | An autonomous production readiness audit. In one run it inventories every surface and assesses 32 parts with 604 evidence-backed checks, from functional correctness, security and identity to billing, privacy, accessibility, AI, mobile and launch. It returns a structured JSON payload and report that rank parts and surfaces by risk, with a GO, GO WITH CONDITIONS, HOLD or NO-GO decision per surface and overall. | "Is this ready to launch?" · "Run a production readiness audit" · "Give me a go/no-go for the v2 release" · "Are these screens actually finished?" |
+| [**production**](skills/production/SKILL.md) | An autonomous production readiness audit. In one run it inventories every surface and assesses 39 parts with 753 evidence-backed checks, from functional correctness, security and identity to billing, privacy, accessibility, AI, mobile and launch, including dedicated checks for MCP, agent execution, self-hosted deployment, offline sync, real-time systems, devices and supply chains. It returns a structured JSON payload and report that rank parts and surfaces by risk, with a GO, GO WITH CONDITIONS, HOLD or NO-GO decision per surface and overall. | "Is this ready to launch?" · "Run a production readiness audit" · "Give me a go/no-go for the v2 release" · "Are these screens actually finished?" · "Audit this MCP server before release" |
 
 They work well together: the production audit finds the blueprint wherever the project keeps it, and its `product.md` becomes the requirements standard the audit checks against.
 
@@ -76,7 +78,7 @@ This repository does not accept contributions. Pull requests are closed automati
 
 ## Disclaimer
 
-The `production` skill's legal, privacy, tax and accessibility-law material is a starting map for engineering audits, not legal advice. Regulations and thresholds change. Confirm them with the regulator or counsel before relying on them. Review any skill before installing it.
+The `production` skill's legal, privacy, tax and accessibility-law material is a starting map for engineering audits, not legal advice. Regulations and thresholds change. Confirm them with the regulator or counsel before relying on them. The audit is an engineering assessment, not a regulatory, functional-safety or platform certification. Its [source register](skills/production/references/standards-sources.md) records the expanded coverage baseline and how to check applicability/currentness. Review any skill before installing it.
 
 ## License
 

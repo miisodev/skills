@@ -59,6 +59,16 @@ Is the data correct, isolated, performant, protected and clean? The product can 
 | DAT-21 | Retention is implemented, not just written: expired sessions, logs, soft-deleted rows and temporary files are actually purged | Scheduled jobs | Medium |
 | DAT-22 | Data exports (user- or admin-facing) include only permitted data and are access-controlled and expiring | Test | High |
 
+### Additional platform and lifecycle checks
+
+| ID | Check | Verify | Severity |
+|---|---|---|---|
+| DAT-23 | Data pipeline inputs and outputs have explicit schema, freshness and completeness contracts | Inject missing, late and malformed records; inspect downstream acceptance | High |
+| DAT-24 | Backfills and reprocessing are isolated, resumable and do not duplicate externally visible effects | Replay a bounded historical fixture and compare aggregates/side effects | High |
+| DAT-25 | Lineage connects source records to derived tables, indexes and model inputs sufficiently for correction/deletion | Trace one corrected/deleted test record across derived stores | High |
+| DAT-26 | Partial batch success, poison records and reconciliation reveal dropped or duplicated records | Compare source/sink counts and invariants after an interrupted batch | High |
+| DAT-27 | Imports and parsers bound decompression, recursion, allocation and filesystem effects | Use isolated archive/parser fixtures; inspect limits and traversal checks | High |
+
 ## Severity notes
 
 Isolation disabled on a table containing user data, or a privileged key in a client, is Critical. Float money is Critical because errors accumulate silently.

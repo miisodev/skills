@@ -37,6 +37,13 @@ Does the product work across the browsers, devices, operating systems, screen si
 | CMP-11 | Data and file formats the product imports or exports interoperate with the tools users pair it with (CSV encodings, calendar, spreadsheets) | Round-trip with a common tool | Medium |
 | CMP-12 | Integrations work against the current versions of the third-party APIs, and deprecation notices are handled | Provider changelogs vs. integration code | Medium |
 
+### Additional platform and lifecycle checks
+
+| ID | Check | Verify | Severity |
+|---|---|---|---|
+| CMP-13 | Hardware, CPU architecture, runtime ABI and external protocol versions match the declared support matrix | Install the packaged release on the supported combinations | High |
+| CMP-14 | Games, spatial and kiosk interfaces support required controllers/input devices and safe recovery from focus/device loss | Exercise advertised input modes, resume and disconnected devices | High |
+
 ## Severity notes
 
 Breakage on a platform that serves a significant share of users (per analytics or market data) in a core flow is Critical. Where no analytics exist, treat Chrome, Safari/iOS and Android Chrome as major.

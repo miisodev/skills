@@ -1,0 +1,287 @@
+{
+  "schema_version": "1.0",
+  "product": {
+    "name": "Archive Bridge (synthetic example)",
+    "description": "Fictional local stdio MCP server for a document store. This payload demonstrates shape and gating; no real product was tested.",
+    "types": [
+      "mcp"
+    ],
+    "markets": []
+  },
+  "run": {
+    "date": "2026-10-20",
+    "profile": "spot-audit",
+    "parts_in_scope": [
+      "mcp"
+    ],
+    "auditor": "illustrative fixture",
+    "environments_examined": [
+      "synthetic test harness; no real installation"
+    ],
+    "assumptions": [
+      "MCP-part demonstration only; general security/data/package/deployment parts are outside this example scope."
+    ],
+    "limitations": [
+      "All evidence is synthetic. This is neither a real audit nor a whole-product readiness decision.",
+      "Host-side consent and remote discovery protections have no observed evidence."
+    ]
+  },
+  "summary": "Illustrative HOLD: critical isolation is unverified. The host boundary and URL handling also need evidence. All evidence below is simulated.",
+  "surfaces": [
+    {
+      "id": "local-mcp",
+      "name": "Local stdio MCP",
+      "kind": "mcp-server",
+      "core": true,
+      "notes": "Fictional dual-era server; fixture advertises 2025-11-25 and 2026-07-28."
+    }
+  ],
+  "checks": [
+    {
+      "id": "MCP-01",
+      "surface": "local-mcp",
+      "status": "pass",
+      "severity": "high",
+      "core_flow": true,
+      "evidence": "SIMULATED fixture evidence only: Run each advertised combination, including unsupported-version handling.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "MCP-02",
+      "surface": "local-mcp",
+      "status": "pass",
+      "severity": "high",
+      "core_flow": true,
+      "evidence": "SIMULATED fixture evidence only: Trace startup and a request after reconnect; do not require sessions on stateless revisions.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "MCP-03",
+      "surface": "local-mcp",
+      "status": "pass",
+      "severity": "high",
+      "core_flow": true,
+      "evidence": "SIMULATED fixture evidence only: Protocol fixtures for invalid params, unknown methods and concurrent IDs.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "MCP-04",
+      "surface": "local-mcp",
+      "status": "pass",
+      "severity": "high",
+      "core_flow": true,
+      "evidence": "SIMULATED fixture evidence only: Launch from a clean process; capture both streams; close stdin.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "MCP-05",
+      "surface": "local-mcp",
+      "status": "not_applicable",
+      "core_flow": false,
+      "evidence": "SIMULATED scope: Fixture advertises stdio only.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "MCP-06",
+      "surface": "local-mcp",
+      "status": "pass",
+      "severity": "medium",
+      "core_flow": false,
+      "evidence": "SIMULATED fixture evidence only: Compare advertised capabilities with calls; test extension opt-in.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "MCP-07",
+      "surface": "local-mcp",
+      "status": "pass",
+      "severity": "high",
+      "core_flow": true,
+      "evidence": "SIMULATED fixture evidence only: Validate schemas; call valid and invalid arguments; distinguish protocol errors from tool failures.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "MCP-08",
+      "surface": "local-mcp",
+      "status": "pass",
+      "severity": "high",
+      "core_flow": true,
+      "evidence": "SIMULATED fixture evidence only: Enumerate and read resources; resolve templates; retrieve a prompt with missing arguments.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "MCP-09",
+      "surface": "local-mcp",
+      "status": "pass",
+      "severity": "high",
+      "core_flow": true,
+      "evidence": "SIMULATED fixture evidence only: Page catalogs with two permission sets; invalidate a cached definition.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "MCP-10",
+      "surface": "local-mcp",
+      "status": "pass",
+      "severity": "high",
+      "core_flow": true,
+      "evidence": "SIMULATED fixture evidence only: Run a core workflow on the declared support matrix.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "MCP-11",
+      "surface": "local-mcp",
+      "status": "not_verified",
+      "severity": "critical",
+      "core_flow": true,
+      "evidence": "SIMULATED gap: no runtime evidence for this boundary; use the verification method in mcp-audit before release.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "MCP-12",
+      "surface": "local-mcp",
+      "status": "not_applicable",
+      "core_flow": false,
+      "evidence": "SIMULATED scope: Fixture has no protected HTTP transport.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "MCP-13",
+      "surface": "local-mcp",
+      "status": "not_applicable",
+      "core_flow": false,
+      "evidence": "SIMULATED scope: Fixture has no HTTP tokens; local access assessed separately.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "MCP-14",
+      "surface": "local-mcp",
+      "status": "not_applicable",
+      "core_flow": false,
+      "evidence": "SIMULATED scope: Fixture is not an OAuth client.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "MCP-15",
+      "surface": "local-mcp",
+      "status": "not_applicable",
+      "core_flow": false,
+      "evidence": "SIMULATED scope: Fixture has no gateway/proxy.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "MCP-16",
+      "surface": "local-mcp",
+      "status": "not_verified",
+      "severity": "high",
+      "core_flow": true,
+      "evidence": "SIMULATED gap: no runtime evidence for this boundary; use the verification method in mcp-audit before release.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "MCP-17",
+      "surface": "local-mcp",
+      "status": "pass",
+      "severity": "high",
+      "core_flow": true,
+      "evidence": "SIMULATED fixture evidence only: Inspect binding/origin policy and argument-array process launch.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "MCP-18",
+      "surface": "local-mcp",
+      "status": "not_verified",
+      "severity": "critical",
+      "core_flow": true,
+      "evidence": "SIMULATED gap: no runtime evidence for this boundary; use the verification method in mcp-audit before release.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "MCP-19",
+      "surface": "local-mcp",
+      "status": "pass",
+      "severity": "high",
+      "core_flow": true,
+      "evidence": "SIMULATED fixture evidence only: Compare declarations with effects; test denial and changed arguments after approval.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "MCP-20",
+      "surface": "local-mcp",
+      "status": "pass",
+      "severity": "critical",
+      "core_flow": true,
+      "evidence": "SIMULATED fixture evidence only: Test traversal, symlinks and unauthorized resource identifiers on a fixture filesystem.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "MCP-21",
+      "surface": "local-mcp",
+      "status": "pass",
+      "severity": "high",
+      "core_flow": true,
+      "evidence": "SIMULATED fixture evidence only: Cancel a slow test tool and observe cleanup and quotas.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "MCP-22",
+      "surface": "local-mcp",
+      "status": "pass",
+      "severity": "critical",
+      "core_flow": true,
+      "evidence": "SIMULATED fixture evidence only: Repeat after simulated disconnect; tamper with or swap continuation handles.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "MCP-23",
+      "surface": "local-mcp",
+      "status": "pass",
+      "severity": "high",
+      "core_flow": true,
+      "evidence": "SIMULATED fixture evidence only: Decline input; inspect context sent upstream; test unsupported client capability.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "MCP-24",
+      "surface": "local-mcp",
+      "status": "not_applicable",
+      "core_flow": false,
+      "evidence": "SIMULATED scope: Fixture implements no Tasks or subscriptions extension.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "MCP-25",
+      "surface": "local-mcp",
+      "status": "not_applicable",
+      "core_flow": false,
+      "evidence": "SIMULATED scope: Fixture implements no MCP Apps UI.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "MCP-26",
+      "surface": "local-mcp",
+      "status": "pass",
+      "severity": "high",
+      "core_flow": true,
+      "evidence": "SIMULATED fixture evidence only: Inspect successful, failed and denied test-call logs.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "MCP-27",
+      "surface": "local-mcp",
+      "status": "pass",
+      "severity": "medium",
+      "core_flow": false,
+      "evidence": "SIMULATED fixture evidence only: Follow quickstart from a clean profile; compare marketplace claims with actual server.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "MCP-28",
+      "surface": "local-mcp",
+      "status": "pass",
+      "severity": "high",
+      "core_flow": true,
+      "evidence": "SIMULATED fixture evidence only: Restart during reads/writes; change a catalog and reconnect.",
+      "evidence_type": "observed"
+    }
+  ],
+  "findings": []
+}

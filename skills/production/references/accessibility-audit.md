@@ -1,6 +1,6 @@
 # Accessibility audit
 
-Can everyone use the product, including people using screen readers, keyboards, switch devices, magnification, voice control or captions, and people with cognitive, motor or vision differences? The default bar is **WCAG 2.2 AA** (or the platform equivalent for native apps), which also satisfies the common legal regimes below.
+Can everyone use the product, including people using screen readers, keyboards, switch devices, magnification, voice control or captions, and people with cognitive, motor or vision differences? The default bar is **WCAG 2.2 AA** (or the platform equivalent for native apps), with legal applicability assessed separately below.
 
 - **Check prefix:** `A11`
 - **Applies to:** marketing site, web app, admin console, mobile app, desktop app, extension, docs/help center, email templates (A11-15 to A11-17)
@@ -8,7 +8,7 @@ Can everyone use the product, including people using screen readers, keyboards, 
 
 ## Evidence
 
-- **Automated:** axe-core or equivalent over every core page/screen; Lighthouse accessibility; platform scanners (Accessibility Inspector, Android Accessibility Scanner, Accessibility Insights). Automated tools find roughly a third of issues. A clean automated result is necessary but not sufficient.
+- **Automated:** axe-core or equivalent over every core page/screen; Lighthouse accessibility; platform scanners (Accessibility Inspector, Android Accessibility Scanner, Accessibility Insights). Automated results do not prove accessibility; manual evidence is still required.
 - **Manual:** keyboard-only pass of every critical journey; a screen-reader pass with at least one reader per platform shipped (NVDA or JAWS on Windows, VoiceOver on macOS/iOS, TalkBack on Android); zoom to 200% and 400% reflow; OS text scaling; reduced motion; high-contrast mode.
 
 ## Checks
@@ -64,6 +64,17 @@ Can everyone use the product, including people using screen readers, keyboards, 
 
 Legal applicability is reported through legal-audit. This table sets severity: where a regime applies, failures that block a core flow are Critical.
 
+### Additional platform and lifecycle checks
+
+| ID | Check | Verify | Severity |
+|---|---|---|---|
+| A11-24 | Non-web software is assessed with native semantics and relevant WCAG2ICT guidance rather than CSS-only tests | Use platform accessibility APIs on the actual shipped application | High |
+| A11-25 | Terminal and developer workflows do not require color, animation or a pointing device to convey essential state | Run help, errors and interactive prompts with accessible terminal settings | Medium |
+
 ## Severity notes
 
 Anything that makes a core journey impossible for a keyboard or screen-reader user is Critical and `core_flow: true`. Isolated contrast or labelling gaps outside core flows are Medium.
+
+## Sources for the added checks
+
+Reviewed 2026-10-20: [WCAG2ICT](https://www.w3.org/TR/wcag2ict-22/) is W3C guidance for applying WCAG to non-web ICT, not a separate conformance standard. Terminal checks adapt the accessible interaction principle to the shipped interface.
