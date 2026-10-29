@@ -4,7 +4,7 @@ description: "Evidence-based production readiness audits for software products a
 license: MIT
 metadata:
   author: miisodev
-  version: "1.1.0"
+  version: "1.1.1"
 ---
 
 # Production readiness

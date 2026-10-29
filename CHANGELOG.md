@@ -2,6 +2,13 @@
 
 All notable changes to these skills are documented here. Versions follow [Semantic Versioning](https://semver.org/): a major version changes a skill's structure or outputs in ways that break existing use, a minor version adds capability, and a patch fixes content.
 
+## [1.1.1] - Unreleased
+
+### blueprint
+
+- Make official trademark-registry checks an owner-run verification step with exact queries, goods/services, candidate classes and search instructions. Treat public aggregators as preliminary evidence and blocked or unloaded searches as unverified; require returned official results before closing availability checks.
+- Link primary USPTO and WIPO guidance, including related goods/services across classes and national/register coverage limits. Both skill and marketplace versions move together; production behavior is unchanged.
+
 ## [1.1.0] - 2026-10-20
 
 ### production
