@@ -2,7 +2,7 @@
 
 All notable changes to these skills are documented here. Versions follow [Semantic Versioning](https://semver.org/): a major version changes a skill's structure or outputs in ways that break existing use, a minor version adds capability, and a patch fixes content.
 
-## [1.1.1] - Unreleased
+## [1.1.1] - 2026-11-18
 
 ### blueprint
 
@@ -52,6 +52,7 @@ First public release.
 - `scripts/readiness.py` does the validation, scoring, ranking and gating (Python 3.8+, standard library only).
 - Covers OWASP Top 10:2025, the OWASP LLM Top 10, WCAG 2.2 AA, and the major privacy, accessibility, consumer and tax regimes.
 
+[1.1.1]: https://github.com/miisodev/skills/releases/tag/v1.1.1
 [1.1.0]: https://github.com/miisodev/skills/releases/tag/v1.1.0
 [1.0.1]: https://github.com/miisodev/skills/releases/tag/v1.0.1
 [1.0.0]: https://github.com/miisodev/skills/releases/tag/v1.0.0
