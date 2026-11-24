@@ -2,6 +2,12 @@
 
 All notable changes to these skills are documented here. Versions follow [Semantic Versioning](https://semver.org/): a major version changes a skill's structure or outputs in ways that break existing use, a minor version adds capability, and a patch fixes content.
 
+## [2.0.2] - 2026-11-24
+
+### Both skills
+
+- Remove the shebang from `readiness.py` per Anthropic's plugin-directory validation (the script is invoked as `python readiness.py`; behavior unchanged). No skill content changes; both versions move to 2.0.2 together. Note: the directory accepts scripts only from Verified organizations — this release removes the refused `#!` marker; the org-verification or appeal decision stays with the owner.
+
 ## [2.0.1] - 2026-11-24
 
 ### Both skills

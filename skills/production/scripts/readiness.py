@@ -1,6 +1,4 @@
-#!/usr/bin/env python3
 """Score, rank and gate a production readiness payload, then render the report.
-
 The auditing agent records judgments (each check's status, severity and
 evidence, plus findings) in a JSON payload. This script does the arithmetic:
 validation, per-part and per-surface scores, rankings, the go/no-go decision,

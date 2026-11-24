@@ -12,7 +12,7 @@
 [![Sponsor](https://img.shields.io/github/sponsors/miisodev?style=for-the-badge&logo=githubsponsors&labelColor=000000&color=0a0a0a&label=Sponsor)](https://github.com/sponsors/miisodev)
 [![PayPal](https://img.shields.io/badge/Donate-PayPal-0a0a0a?style=for-the-badge&logo=paypal&labelColor=000000)](https://paypal.me/miisodev)
 
-**Latest version:** [v2.0.1](https://github.com/miisodev/skills/releases) — both skills ship in one version.
+**Latest version:** [v2.0.2](https://github.com/miisodev/skills/releases) — both skills ship in one version.
 
 ## What it is
 
