@@ -2,6 +2,12 @@
 
 All notable changes to these skills are documented here. Versions follow [Semantic Versioning](https://semver.org/): a major version changes a skill's structure or outputs in ways that break existing use, a minor version adds capability, and a patch fixes content.
 
+## [2.0.4] - 2026-11-24
+
+### Both skills
+
+- Add the MCPRush badge before the skills.sh badge, and make the header's version line dynamic (it points at the Release badge and changelog instead of a hard-coded version that goes stale on every release — the line had drifted to v2.0.2 while the release was v2.0.3). No skill content changes; both versions move to 2.0.4 together.
+
 ## [2.0.3] - 2026-11-24
 
 ### Both skills

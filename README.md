@@ -2,13 +2,14 @@
 
 <img src="assets/social-preview.png" alt="Agent/LLM skills for engineering by miisodev" width="720">
 
+[![MCPRush](https://img.shields.io/badge/MCPRush-miisodev-0a0a0a?style=for-the-badge)](https://mcprush.com/miisodev)
 [![skills.sh](https://skills.sh/b/miisodev/skills?style=for-the-badge)](https://skills.sh/miisodev/skills)
 [![Release](https://img.shields.io/github/v/release/miisodev/skills?style=for-the-badge&labelColor=000000&color=0a0a0a)](https://github.com/miisodev/skills/releases)
 [![License: MIT](https://img.shields.io/github/license/miisodev/skills?style=for-the-badge&labelColor=000000&color=0a0a0a)](LICENSE)
 [![Sponsor](https://img.shields.io/github/sponsors/miisodev?style=for-the-badge&logo=githubsponsors&labelColor=000000&color=0a0a0a&label=Sponsor)](https://github.com/sponsors/miisodev)
 [![PayPal](https://img.shields.io/badge/Donate-PayPal-0a0a0a?style=for-the-badge&logo=paypal&labelColor=000000)](https://paypal.me/miisodev)
 
-**Latest version:** [v2.0.2](https://github.com/miisodev/skills/releases) — both skills ship in one version ([changelog](CHANGELOG.md)).
+**Latest version:** the [Release badge](https://github.com/miisodev/skills/releases) above — both skills always ship in one version ([changelog](CHANGELOG.md)).
 
 ## What it is
 

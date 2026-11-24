@@ -4,7 +4,7 @@ description: "Establish a project's blueprint together with its owner: seven doc
 license: MIT
 metadata:
   author: miisodev
-  version: "2.0.3"
+  version: "2.0.4"
 ---
 
 # Blueprint
