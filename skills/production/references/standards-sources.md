@@ -24,4 +24,6 @@ The checks combine source-backed protocol distinctions with engineering test sce
 
 For a release or an audit relying on an external requirement, record the applicable edition, source URL, date checked and which checks it affects. Recheck when the implemented protocol, platform, supported market or material threat model changes. Review this register and cited regimes at least quarterly; legal/provider tables elsewhere are inherited baseline material and were not all revalidated by this expansion. Verify their current applicability before making a compliance claim.
 
+Maintain this register as a dated table with an owner and a next-review date per area, plus the check IDs each entry affects. The auditing agent records the baseline editions it relied on in `run.assumptions` ("audited against MCP rev 2026-07-28, OWASP LLM Top 10 2025 baseline") and discloses a stale or unmapped baseline in the report's limitations rather than presenting it as current.
+
 An unreachable source is a research limitation. Missing runtime evidence is a check outcome. Keep those distinct: a protocol document describes required behavior but cannot prove the installed server implements it. A marketplace listing or security grade cannot replace tool, package or deployment tests.

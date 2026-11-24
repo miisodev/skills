@@ -1,0 +1,345 @@
+{
+  "schema_version": "1.1",
+  "product": {
+    "name": "Self-hosted example",
+    "description": "Synthetic example payload, labelled as such: it demonstrates a complete, passing scoped audit.",
+    "types": [
+      "cli"
+    ],
+    "repository": "https://example.com/tool",
+    "markets": [
+      "US"
+    ]
+  },
+  "run": {
+    "date": "2026-11-24",
+    "profile": "spot-audit",
+    "auditor": "Synthetic example",
+    "environments_examined": [
+      "local clean environment"
+    ],
+    "assumptions": [
+      "Every check result is synthetic and labelled; the example demonstrates shape and completeness, not a real audit."
+    ],
+    "limitations": [
+      "Illustrative only."
+    ],
+    "parts_in_scope": [
+      "deployment",
+      "sync"
+    ],
+    "surfaces_in_scope": "all"
+  },
+  "summary": "Synthetic example: a complete two-part scoped audit with not_applicable reasons where checks do not apply, and one non-core not_verified item that is listed without holding the decision.",
+  "surfaces": [
+    {
+      "id": "selfhost",
+      "name": "Self-hosted service",
+      "kind": "self-hosted-service",
+      "location": "https://selfhost.example.com",
+      "core": true
+    }
+  ],
+  "checks": [
+    {
+      "id": "DEP-01",
+      "surface": "selfhost",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "Synthetic observed result: install completed on a clean machine from the released archive.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "DEP-02",
+      "surface": "selfhost",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "Synthetic observed result: the check was exercised in the test environment and passed.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "DEP-03",
+      "surface": "selfhost",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "Synthetic observed result: the check was exercised in the test environment and passed.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "DEP-04",
+      "surface": "selfhost",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "Synthetic observed result: the check was exercised in the test environment and passed.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "DEP-05",
+      "surface": "selfhost",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "Synthetic observed result: the check was exercised in the test environment and passed.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "DEP-06",
+      "surface": "selfhost",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "Synthetic observed result: the check was exercised in the test environment and passed.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "DEP-07",
+      "surface": "selfhost",
+      "status": "not_verified",
+      "severity": "high",
+      "evidence": "Synthetic: requires a person to verify in the live deployment dashboard."
+    },
+    {
+      "id": "DEP-08",
+      "surface": "selfhost",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "Synthetic observed result: the check was exercised in the test environment and passed.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "DEP-09",
+      "surface": "selfhost",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "Synthetic observed result: the check was exercised in the test environment and passed.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "DEP-10",
+      "surface": "selfhost",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "Synthetic observed result: the check was exercised in the test environment and passed.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "DEP-11",
+      "surface": "selfhost",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "Synthetic observed result: the check was exercised in the test environment and passed.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "DEP-12",
+      "surface": "selfhost",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "Synthetic observed result: the check was exercised in the test environment and passed.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "DEP-13",
+      "surface": "selfhost",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "Synthetic observed result: the check was exercised in the test environment and passed.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "DEP-14",
+      "surface": "selfhost",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "Synthetic observed result: the check was exercised in the test environment and passed.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "DEP-15",
+      "surface": "selfhost",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "Synthetic observed result: the check was exercised in the test environment and passed.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "DEP-16",
+      "surface": "selfhost",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "Synthetic observed result: the check was exercised in the test environment and passed.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "DEP-17",
+      "surface": "selfhost",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "Synthetic observed result: the check was exercised in the test environment and passed.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "DEP-18",
+      "surface": "selfhost",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "Synthetic observed result: the check was exercised in the test environment and passed.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "DEP-19",
+      "surface": "selfhost",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "Synthetic observed result: the check was exercised in the test environment and passed.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "DEP-20",
+      "surface": "selfhost",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "Synthetic observed result: the check was exercised in the test environment and passed.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "SYN-01",
+      "surface": "selfhost",
+      "status": "not_applicable",
+      "evidence": "Not applicable: the service is stateless server-side; offline editing is out of scope for this release."
+    },
+    {
+      "id": "SYN-02",
+      "surface": "selfhost",
+      "status": "not_applicable",
+      "evidence": "Not applicable: no offline queue exists to conflict."
+    },
+    {
+      "id": "SYN-03",
+      "surface": "selfhost",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "Synthetic observed result: the check was exercised in the test environment and passed.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "SYN-04",
+      "surface": "selfhost",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "Synthetic observed result: the check was exercised in the test environment and passed.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "SYN-05",
+      "surface": "selfhost",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "Synthetic observed result: the check was exercised in the test environment and passed.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "SYN-06",
+      "surface": "selfhost",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "Synthetic observed result: the check was exercised in the test environment and passed.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "SYN-07",
+      "surface": "selfhost",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "Synthetic observed result: the check was exercised in the test environment and passed.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "SYN-08",
+      "surface": "selfhost",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "Synthetic observed result: the check was exercised in the test environment and passed.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "SYN-09",
+      "surface": "selfhost",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "Synthetic observed result: the check was exercised in the test environment and passed.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "SYN-10",
+      "surface": "selfhost",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "Synthetic observed result: the check was exercised in the test environment and passed.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "SYN-11",
+      "surface": "selfhost",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "Synthetic observed result: the check was exercised in the test environment and passed.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "SYN-12",
+      "surface": "selfhost",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "Synthetic observed result: the check was exercised in the test environment and passed.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "SYN-13",
+      "surface": "selfhost",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "Synthetic observed result: the check was exercised in the test environment and passed.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "SYN-14",
+      "surface": "selfhost",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "Synthetic observed result: the check was exercised in the test environment and passed.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "SYN-15",
+      "surface": "selfhost",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "Synthetic observed result: the check was exercised in the test environment and passed.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "SYN-16",
+      "surface": "selfhost",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "Synthetic observed result: the check was exercised in the test environment and passed.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "SYN-17",
+      "surface": "selfhost",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "Synthetic observed result: the check was exercised in the test environment and passed.",
+      "evidence_type": "observed"
+    },
+    {
+      "id": "SYN-18",
+      "surface": "selfhost",
+      "status": "pass",
+      "severity": "high",
+      "evidence": "Synthetic observed result: the check was exercised in the test environment and passed.",
+      "evidence_type": "observed"
+    }
+  ],
+  "findings": []
+}

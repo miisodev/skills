@@ -19,7 +19,8 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
-SCHEMA_VERSION = "1.0"
+SCHEMA_VERSION = "1.1"
+SUPPORTED_SCHEMA_VERSIONS = ("1.0", "1.1")
 STATUSES = ("pass", "partial", "fail", "not_verified", "not_applicable")
 SEVERITIES = ("critical", "high", "medium", "low")
 WEIGHT = {"critical": 10, "high": 5, "medium": 2, "low": 1}
@@ -63,12 +64,16 @@ DECISION_LABEL = {
 
 
 def load_registry(ref_dir):
-    """Map check ID -> part id from the reference files, if they are present."""
+    """Map check ID -> part id from the reference files, if they are present.
+
+    Matches the same ID grammar as ID_RE (2-3 digit numeric forms); custom
+    `C`-prefixed IDs are payload-local and are never expected checks.
+    """
     registry = {}
     if not ref_dir.is_dir():
         return registry
     for f in ref_dir.glob("*-audit.md"):
-        for m in re.finditer(r"^\| ([A-Z0-9]+-\d\d) \|", f.read_text(encoding="utf-8"), re.M):
+        for m in re.finditer(r"^\| ([A-Z][A-Z0-9]{1,3}-(\d{2,3})) \|", f.read_text(encoding="utf-8"), re.M):
             prefix = m.group(1).split("-")[0]
             if prefix in PARTS:
                 registry[m.group(1)] = PARTS[prefix][0]
@@ -77,8 +82,10 @@ def load_registry(ref_dir):
 
 def validate(p, registry):
     errors, warnings = [], []
-    if p.get("schema_version") != SCHEMA_VERSION:
-        warnings.append(f"schema_version is {p.get('schema_version')!r}; expected {SCHEMA_VERSION!r}")
+    version = p.get("schema_version")
+    if version not in SUPPORTED_SCHEMA_VERSIONS:
+        errors.append(f"schema_version is {version!r}; supported: {', '.join(SUPPORTED_SCHEMA_VERSIONS)}")
+    strict = version == "1.1"
     for key in ("product", "run", "surfaces", "checks"):
         if key not in p:
             errors.append(f"missing top-level field: {key}")
@@ -87,9 +94,16 @@ def validate(p, registry):
     scope = p["run"].get("parts_in_scope", "all")
     if scope != "all" and (not isinstance(scope, list) or any(x not in PART_BY_ID for x in scope)):
         errors.append(f"run.parts_in_scope must be \"all\" or a list of part ids from: {sorted(PART_BY_ID)}")
+    sscope = p["run"].get("surfaces_in_scope", "all")
+    declared = {s.get("id") for s in p["surfaces"]}
+    if sscope != "all" and (not isinstance(sscope, list) or not sscope
+                            or any(x not in declared for x in sscope)):
+        errors.append(f"run.surfaces_in_scope must be \"all\" or a non-empty list of declared surface ids")
     for x in p.get("parts", []):
         if x.get("id") not in PART_BY_ID:
             errors.append(f"parts: unknown part id {x.get('id')!r}")
+        elif x.get("applicable") is False and not (x.get("reason") or "").strip():
+            errors.append(f"parts: {x.get('id')} is marked not applicable without a reason")
     surface_ids = {s.get("id") for s in p["surfaces"]}
     if PRODUCT_WIDE in surface_ids:
         errors.append(f"surface id {PRODUCT_WIDE!r} is reserved for product-wide checks")
@@ -107,6 +121,10 @@ def validate(p, registry):
             errors.append(f"{where}: status must be one of {STATUSES}")
         if c.get("status") != "not_applicable" and c.get("severity") not in SEVERITIES:
             errors.append(f"{where}: severity must be one of {SEVERITIES}")
+        if c.get("status") == "not_applicable" and not (c.get("evidence") or "").strip():
+            errors.append(f"{where}: not_applicable requires a reason in evidence")
+        if strict and c.get("status") in ("pass", "partial", "fail") and not (c.get("evidence") or "").strip():
+            errors.append(f"{where}: {c['status']} without evidence (schema 1.1)")
         surface = c.get("surface", PRODUCT_WIDE)
         if surface != PRODUCT_WIDE and surface not in surface_ids:
             errors.append(f"{where}: unknown surface {surface!r}")
@@ -116,8 +134,16 @@ def validate(p, registry):
         seen.add(key)
         if registry and not m.group(2).startswith("C") and c["id"] not in registry:
             warnings.append(f"{where}: id not found in the reference files (typo, or use a custom id like {m.group(1)}-C01)")
-        if c.get("status") in ("pass", "partial", "fail") and not c.get("evidence"):
+        if c.get("status") in ("pass", "partial", "fail") and not c.get("evidence") and not strict:
             warnings.append(f"{where}: {c['status']} without evidence")
+        if c.get("status") in ("fail", "partial") and c.get("risk_accepted_by") and strict:
+            errors.append(f"{where}: schema 1.1 records risk acceptance as risk_acceptance "
+                          f"{{by, reference, date}}, not risk_accepted_by")
+        if c.get("status") in ("fail", "partial") and c.get("risk_acceptance"):
+            ra = c["risk_acceptance"]
+            if not (isinstance(ra, dict) and (ra.get("by") or "").strip()
+                    and (ra.get("reference") or "").strip() and (ra.get("date") or "").strip()):
+                errors.append(f"{where}: risk_acceptance needs by, reference and date")
     if registry:
         recorded = {c.get("id") for c in p["checks"]}
         na = {x.get("id") for x in p.get("parts", []) if x.get("applicable") is False}
@@ -128,22 +154,51 @@ def validate(p, registry):
             missing = ids - recorded
             if missing and len(missing) < len(ids):
                 warnings.append(f"part {part}: {len(missing)} of {len(ids)} checks have no result "
-                                f"(record not_applicable with a reason instead of omitting): {', '.join(sorted(missing))}")
-    covered = {cid for f in p.get("findings", []) for cid in f.get("checks", [])}
+                                f"(the decision holds until they are assessed or recorded not_applicable with a reason): "
+                                f"{', '.join(sorted(missing))}")
+    result_keys = {(c.get("id"), c.get("surface", PRODUCT_WIDE)) for c in p["checks"]}
+    by_id = defaultdict(list)
     for c in p["checks"]:
-        if c.get("status") in ("fail", "partial") and c.get("severity") in ("critical", "high") and c["id"] not in covered:
-            warnings.append(f"{c['id']}: open {c['severity']} check has no finding")
+        by_id[c.get("id")].append(c.get("surface", PRODUCT_WIDE))
+    covered = set()
     for f in p.get("findings", []):
         if f.get("severity") not in SEVERITIES:
             errors.append(f"finding {f.get('id')}: severity must be one of {SEVERITIES}")
-        for cid in f.get("checks", []):
-            if not any(c.get("id") == cid for c in p["checks"]):
-                warnings.append(f"finding {f.get('id')}: references check {cid} with no recorded result")
+        for ref in f.get("checks", []):
+            if isinstance(ref, dict):
+                cid, sid = ref.get("id"), ref.get("surface", PRODUCT_WIDE)
+                if (cid, sid) not in result_keys:
+                    errors.append(f"finding {f.get('id')}: references check {cid}@{sid} with no recorded result")
+                covered.add((cid, sid))
+                continue
+            ref = str(ref)
+            if "@" in ref:
+                cid, _, sid = ref.partition("@")
+                sid = PRODUCT_WIDE if sid == "all" else sid
+                if (cid, sid) in result_keys:
+                    covered.add((cid, sid))
+                else:
+                    errors.append(f"finding {f.get('id')}: references check {cid}@{sid} with no recorded result")
+                continue
+            sid = f.get("surfaces", [PRODUCT_WIDE])[0] if f.get("surfaces") else PRODUCT_WIDE
+            if (ref, sid) in result_keys:
+                covered.add((ref, sid))
+            elif len(by_id.get(ref, [])) == 1:
+                covered.add((ref, by_id[ref][0]))
+            elif not by_id.get(ref):
+                errors.append(f"finding {f.get('id')}: references check {ref} with no recorded result")
+            else:
+                warnings.append(f"finding {f.get('id')}: references check {ref} ambiguous across surfaces "
+                                f"{', '.join(by_id[ref])}; use {ref}@<surface>")
+    for c in p["checks"]:
+        if c.get("status") in ("fail", "partial") and c.get("severity") in ("critical", "high") \
+                and (c["id"], c.get("surface", PRODUCT_WIDE)) not in covered:
+            warnings.append(f"{c['id']}@{c.get('surface', PRODUCT_WIDE)}: open {c['severity']} check has no finding")
     return errors, warnings
 
 
 def is_open(c):
-    return c["status"] in ("fail", "partial") and not c.get("risk_accepted_by")
+    return c["status"] in ("fail", "partial") and not (c.get("risk_acceptance") or c.get("risk_accepted_by"))
 
 
 def is_blocking(c):
@@ -165,7 +220,7 @@ def summarize(checks):
     possible = sum(WEIGHT[c["severity"]] for c in verified)
     total = sum(WEIGHT[c["severity"]] for c in applicable)
     open_counts = {s: sum(1 for c in applicable if is_open(c) and c["severity"] == s) for s in SEVERITIES}
-    accepted = [c for c in applicable if c["status"] in ("fail", "partial") and c.get("risk_accepted_by")]
+    accepted = [c for c in applicable if c["status"] in ("fail", "partial") and (c.get("risk_acceptance") or c.get("risk_accepted_by"))]
     if any(is_blocking(c) for c in applicable):
         status = "blocked"
     elif any(needs_verification(c) for c in applicable):
@@ -213,6 +268,9 @@ def compute(p, registry):
     na_parts = {x["id"]: x.get("reason", "") for x in p.get("parts", []) if x.get("applicable") is False}
     in_scope = p["run"].get("parts_in_scope", "all")
     out_of_scope = set() if in_scope == "all" else set(PART_BY_ID) - set(in_scope)
+    sscope = p["run"].get("surfaces_in_scope", "all")
+    scoped = sscope != "all"
+    in_scope_surfaces = set(sscope) if scoped else None
 
     by_part = defaultdict(list)
     for c in p["checks"]:
@@ -222,6 +280,7 @@ def compute(p, registry):
         defined[part].add(cid)
 
     parts = []
+    missing_checks = []
     for part_id, (prefix, name) in sorted(PART_BY_ID.items(), key=lambda kv: kv[1][1]):
         if part_id in out_of_scope and part_id not in by_part:
             continue
@@ -233,11 +292,25 @@ def compute(p, registry):
         summary = summarize(results) if results else {
             "status": "unassessed", "score": None, "coverage": None, "open": {}, "checks": 0}
         assessed = {c["id"] for c in results if not c["id"].split("-")[1].startswith("C")}
-        summary["assessed"] = f"{len(assessed & defined[part_id])}/{len(defined[part_id])}" if defined[part_id] else None
+        expected = defined[part_id]
+        # Fail-closed completeness: every expected check in an in-scope applicable
+        # part needs a result. A missing check is unassessed and gates the decision.
+        missing = sorted(expected - assessed) if expected else []
+        if missing:
+            if summary["status"] in ("ready", "conditional", "not_applicable"):
+                summary["status"] = "unassessed"
+            summary["missing"] = len(missing)
+            summary["assessed"] = f"{len(assessed & expected)}/{len(expected)}" if expected else None
+            missing_checks.extend({"id": mid, "part": part_id} for mid in missing)
+            parts.append({"id": part_id, "name": name, "prefix": prefix, "summary": summary})
+            continue
+        summary["assessed"] = f"{len(assessed & expected)}/{len(expected)}" if expected else None
         parts.append({"id": part_id, "name": name, "prefix": prefix, "summary": summary})
 
     surfaces = []
     for s in p["surfaces"]:
+        if scoped and s["id"] not in in_scope_surfaces:
+            continue
         results = [c for c in p["checks"] if c["surface"] == s["id"]]
         surfaces.append({"id": s["id"], "name": s["name"], "kind": s.get("kind", ""),
                          "core": s.get("core", False),
@@ -247,27 +320,37 @@ def compute(p, registry):
     if wide:
         surfaces.append({"id": PRODUCT_WIDE, "name": "Product-wide", "kind": "product-wide", "core": True,
                          "summary": summarize(wide)})
+    out_of_scope_surfaces = [s["id"] for s in p["surfaces"] if scoped and s["id"] not in in_scope_surfaces]
     for s in surfaces:
         s["decision"] = decide([s]) if s["summary"]["status"] != "not_applicable" else None
 
     applicable_parts = [x for x in parts if x["summary"]["status"] != "not_applicable"]
     overall = summarize(p["checks"])
     decision = decide(applicable_parts + surfaces)
+    if scoped:
+        decision = f"{decision} (scoped)"
     blockers = [c for c in p["checks"] if is_blocking(c)]
     to_verify = [c for c in p["checks"] if needs_verification(c)]
     conditions = [c for c in p["checks"] if is_open(c) and c["severity"] == "high" and not is_blocking(c)]
-    accepted = [c for c in p["checks"] if c["status"] in ("fail", "partial") and c.get("risk_accepted_by")]
+    accepted = [c for c in p["checks"] if c["status"] in ("fail", "partial")
+                and (c.get("risk_acceptance") or c.get("risk_accepted_by"))]
     return {
         "decision": decision,
+        "decision_scope": "scoped" if scoped else "product",
         "overall": overall,
         "parts": rank(applicable_parts) + [x for x in parts if x not in applicable_parts],
         "surfaces": rank(surfaces),
         "blockers": [c["id"] + "@" + c["surface"] for c in blockers],
         "verification_required": [c["id"] + "@" + c["surface"] for c in to_verify],
         "conditions": [c["id"] + "@" + c["surface"] for c in conditions],
-        "accepted_risks": [{"check": c["id"] + "@" + c["surface"], "by": c["risk_accepted_by"]} for c in accepted],
+        "accepted_risks": [{"check": c["id"] + "@" + c["surface"],
+                            "by": (c.get("risk_acceptance") or {}).get("by") or c.get("risk_accepted_by", ""),
+                            "reference": (c.get("risk_acceptance") or {}).get("reference", ""),
+                            "date": (c.get("risk_acceptance") or {}).get("date", "")} for c in accepted],
+        "missing_checks": missing_checks,
         "unassessed_parts": [x["id"] for x in parts if x["summary"]["status"] == "unassessed"],
         "out_of_scope_parts": sorted(out_of_scope - set(by_part)),
+        "out_of_scope_surfaces": out_of_scope_surfaces,
     }
 
 
@@ -284,14 +367,35 @@ def render(p, r):
     checks = {(c["id"], c["surface"]): c for c in p["checks"]}
     surf_names = {s["id"]: s["name"] for s in p["surfaces"]}
     surf_names[PRODUCT_WIDE] = "Product-wide"
+    finding_by_check = defaultdict(list)
+    for f in p.get("findings", []):
+        for ref in f.get("checks", []):
+            if isinstance(ref, dict):
+                finding_by_check[(ref.get("id"), ref.get("surface", PRODUCT_WIDE))].append(f.get("id", ""))
+            else:
+                ref = str(ref)
+                if "@" in ref:
+                    cid, _, sid = ref.partition("@")
+                    finding_by_check[(cid, PRODUCT_WIDE if sid == "all" else sid)].append(f.get("id", ""))
+                else:
+                    for c in p["checks"]:
+                        if c["id"] == ref:
+                            finding_by_check[(c["id"], c["surface"])].append(f.get("id", ""))
     L = []
     add = L.append
-    add(f"# Production readiness: {prod.get('name', 'Product')}")
+    scoped = r.get("decision_scope") == "scoped"
+    title_scope = "scoped audit" if scoped else "production readiness"
+    add(f"# {prod.get('name', 'Product')}: {title_scope}")
     add("")
-    add(f"**Decision: {DECISION_LABEL[r['decision']]}** · Profile: {run.get('profile', '—')} · "
+    decision_text = DECISION_LABEL[r["decision"].split(" (")[0]] + (" (scoped)" if scoped else "")
+    add(f"**Decision: {decision_text}** · Profile: {run.get('profile', '—')} · "
         f"Date: {run.get('date', '—')} · Overall score {fmt(r['overall']['score'])}/100 · "
         f"Verified coverage {fmt(r['overall']['coverage'], '%')}")
     add("")
+    if scoped:
+        add("This is a **scoped result**: it covers only the parts and surfaces in scope. "
+            "It is not a whole-product readiness decision.")
+        add("")
     if p.get("summary"):
         add("## Summary")
         add("")
@@ -300,21 +404,27 @@ def render(p, r):
     add("## Decision record")
     add("")
     add("```")
-    add(f"Decision:        {DECISION_LABEL[r['decision']]}")
+    add(f"Decision:        {decision_text}")
     add(f"Date:            {run.get('date', '')}")
     add(f"Scope profile:   {run.get('profile', '')}")
+    add(f"Scope:           parts {run.get('parts_in_scope', 'all')}; surfaces {run.get('surfaces_in_scope', 'all')}")
+    if scoped:
+        add("Readiness:       NOT ASSESSED for the whole product (scoped run)")
     add(f"Blockers:        {len(r['blockers'])}")
     add(f"To verify:       {len(r['verification_required'])} critical/core items not yet verified")
+    add(f"Missing:         {len(r['missing_checks'])} expected checks with no result (unassessed)")
     add(f"Conditions:      {len(r['conditions'])} open high-severity items outside core flows")
     add(f"Risk accepted:   {len(r['accepted_risks'])}")
     if r["unassessed_parts"]:
         add(f"Unassessed:      {', '.join(r['unassessed_parts'])}")
-    add(f"Re-review:       {run.get('re_review', 'required before launch' if r['decision'] != 'GO' else 'at next release')}")
+    if r.get("out_of_scope_surfaces"):
+        add(f"Out of scope:    surfaces {', '.join(r['out_of_scope_surfaces'])}")
+    add(f"Re-review:       {run.get('re_review', 'required before launch' if not r['decision'].startswith('GO') else 'at next release')}")
     add("```")
     add("")
-    add("Decision rules: any open Critical, or open High in a core flow, is NO-GO. Critical or core-flow items "
-        "not yet verified (or applicable parts not assessed) HOLD the decision until verified. "
-        "Other open High items make it GO WITH CONDITIONS.")
+    add("Decision rules: every expected check in an in-scope applicable part needs a result — a missing check is "
+        "unassessed and holds the decision. Any open Critical, or open High in a core flow, is NO-GO. Critical or "
+        "core-flow items not yet verified HOLD until verified. Other open High items make it GO WITH CONDITIONS.")
     add("")
 
     add("## Surfaces, ranked by risk")
@@ -350,7 +460,10 @@ def render(p, r):
     def check_line(key):
         cid, sid = key.split("@")
         c = checks[(cid, sid)]
-        return f"- **{cid}** · {surf_names.get(sid, sid)} · {c['severity']}{' · core flow' if c.get('core_flow') else ''}: {c.get('evidence', '')}"
+        refs = finding_by_check.get((cid, sid))
+        ref_note = f" · finding {'/'.join(refs)}" if refs else ""
+        return (f"- **{cid}** · {surf_names.get(sid, sid)} · {c['severity']}{' · core flow' if c.get('core_flow') else ''}"
+                f"{ref_note}: {c.get('evidence', '')}")
 
     if r["blockers"]:
         add("## Blockers")
@@ -364,8 +477,21 @@ def render(p, r):
         add("")
         L.extend(check_line(k) for k in r["verification_required"])
         add("")
+    if r["missing_checks"]:
+        add("## Missing results (unassessed)")
+        add("")
+        add("These expected checks have no recorded result in this run. The decision holds until each is assessed "
+            "or recorded as not applicable with a reason.")
+        add("")
+        by_part = defaultdict(list)
+        for m in r["missing_checks"]:
+            by_part[m["part"]].append(m["id"])
+        for part, ids in sorted(by_part.items()):
+            add(f"- **{part}**: {', '.join(ids)}")
+        add("")
 
-    findings = sorted(p.get("findings", []), key=lambda f: (
+    findings = p.get("findings", [])
+    findings = sorted(findings, key=lambda f: (
         SEVERITIES.index(f["severity"]),
         0 if any(checks.get((cid, s), {}).get("core_flow") for cid in f.get("checks", []) for s in f.get("surfaces", [PRODUCT_WIDE])) else 1,
         EFFORT_ORDER.get(f.get("effort"), 1)))
@@ -382,7 +508,7 @@ def render(p, r):
                 add(f"#### {f.get('id', '')} {f.get('title', '')}")
                 add("")
                 rows = [
-                    ("Checks", ", ".join(f.get("checks", []))),
+                    ("Checks", ", ".join(str(x) if isinstance(x, dict) else x for x in f.get("checks", []))),
                     ("Surfaces", ", ".join(surf_names.get(s, s) for s in f.get("surfaces", [])) or "Product-wide"),
                     ("Evidence", f.get("evidence", "")),
                     ("User impact", f.get("user_impact", "")),
@@ -401,7 +527,8 @@ def render(p, r):
         add("")
         add("| # | Finding | Severity | Effort | Owner |")
         add("|---|---|---|---|---|")
-        for i, f in enumerate([f for f in findings if f["severity"] in ("critical", "high")], 1):
+        table_sevs = ("critical", "high", "medium") if run.get("profile") == "full-audit" else ("critical", "high")
+        for i, f in enumerate([f for f in findings if f["severity"] in table_sevs], 1):
             add(f"| {i} | {f.get('id', '')} {f.get('title', '')} | {f['severity']} | {f.get('effort', '—')} | {f.get('owner', 'unassigned')} |")
         add("")
 
@@ -433,6 +560,13 @@ def render(p, r):
     add("")
     add("Scores weight each check by severity (critical 10, high 5, medium 2, low 1; partial earns half) over the checks "
         "that were verified. Coverage is the share of applicable weight that was verified. Ranks list the most at-risk first.")
+    add("")
+    add(f"---")
+    add("")
+    add(f"Payload schema {p.get('schema_version', '—')} · scored by the production skill's readiness.py "
+        f"(Agent Skills spec) · this is an engineering assessment, not regulatory, functional-safety or platform "
+        f"certification · the cited standards' editions and review dates are in the skill's "
+        f"references/standards-sources.md.")
     return "\n".join(L) + "\n"
 
 
@@ -442,6 +576,7 @@ def main(argv=None):
     ap.add_argument("--md", help="Markdown report path")
     ap.add_argument("--json", help="Result JSON path (payload plus computed results)")
     ap.add_argument("--references", help="References directory (default: ../references next to this script)")
+    ap.add_argument("--fail-on", help="Comma-separated decisions that exit non-zero for CI, e.g. NO_GO,HOLD (default: no gating)")
     a = ap.parse_args(argv)
     src = Path(a.payload)
     try:
@@ -463,11 +598,19 @@ def main(argv=None):
     json_path = Path(a.json) if a.json else src.with_name(src.stem + ".result.json")
     md_path.write_text(render(p, results), encoding="utf-8")
     json_path.write_text(json.dumps({**p, "results": results}, indent=2, ensure_ascii=False), encoding="utf-8")
+    decision = results["decision"]
     o = results["overall"]
-    print(f"Decision: {DECISION_LABEL[results['decision']]} | score {fmt(o['score'])} | coverage {fmt(o['coverage'], '%')} | "
+    print(f"Decision: {decision} | score {fmt(o['score'])} | coverage {fmt(o['coverage'], '%')} | "
           f"blockers {len(results['blockers'])} | to verify {len(results['verification_required'])} | "
-          f"conditions {len(results['conditions'])} | unassessed parts {len(results['unassessed_parts'])}")
+          f"conditions {len(results['conditions'])} | missing {len(results['missing_checks'])} | "
+          f"unassessed parts {len(results['unassessed_parts'])}")
     print(f"Report: {md_path}\nResult: {json_path}")
+    if a.fail_on:
+        wanted = {x.strip().upper() for x in a.fail_on.split(",")}
+        base = decision.split(" (")[0]
+        if base in wanted:
+            print(f"gate: decision {base} matches --fail-on {a.fail_on}", file=sys.stderr)
+            return 4
     return 0
 
 

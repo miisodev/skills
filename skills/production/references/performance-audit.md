@@ -37,7 +37,7 @@ Is the product fast and responsive for real users on real devices and networks, 
 |---|---|---|---|
 | PRF-11 | API p95 latency is within target for core endpoints (typical guide: reads < 500 ms, writes < 800 ms, search < 1 s) | Observability or measurement | High on core flows |
 | PRF-12 | No N+1 query patterns on list and detail endpoints | Query logs; ORM inspection | Medium |
-| PRF-13 | Hot queries use indexes; there are no sequential scans on large tables (see DAT-07) | `EXPLAIN` on top queries | High |
+| PRF-13 | Hot queries use indexes and meet their latency budget; a sequential scan is acceptable where the workload and measured latency are within budget (see DAT-07) | `EXPLAIN` on top queries; measured p95 against the budget | High |
 | PRF-14 | Caching exists where data is read far more than written (HTTP, CDN, application cache), with correct invalidation | Inspect | Medium |
 | PRF-15 | Every list endpoint and query is bounded (pagination, limits) | Route inventory | High |
 | PRF-16 | Serverless/container cold starts on core routes are measured and acceptable | Measure after idle | Medium |

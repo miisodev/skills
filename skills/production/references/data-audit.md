@@ -30,7 +30,7 @@ Is the data correct, isolated, performant, protected and clean? The product can 
 ### Performance and capacity
 | ID | Check | Verify | Severity |
 |---|---|---|---|
-| DAT-07 | Hot query paths are indexed, including every foreign-key column; top queries show no sequential scans on large tables | `EXPLAIN`; unindexed-FK query | High |
+| DAT-07 | Hot query paths are indexed, including every foreign-key column; top queries meet their latency budget — a sequential scan is acceptable where the workload and measured latency are within budget (small tables, batch jobs, one-off analytics) | `EXPLAIN`; unindexed-FK query; the measured p95 against the budget | High |
 | DAT-08 | Connection pooling suits the runtime (essential for serverless), and pool sizes fit database limits across all services | Config | High |
 | DAT-09 | Growth is planned: large and append-heavy tables have archival/TTL strategies; storage alerts precede limits | Size estimates; config | Medium |
 

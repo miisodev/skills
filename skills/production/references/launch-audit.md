@@ -25,7 +25,7 @@ Is **this deployment, now,** ready to meet users, and is the team ready for what
 ### Live verification
 | ID | Check | Verify | Severity |
 |---|---|---|---|
-| LCH-05 | Production smoke test passes across the full lifecycle: land → sign up (email arrives) → onboard → core value action → upgrade/pay (entitlement immediate, receipt arrives) → log out and in → reset password → trigger a handled error → cancel → delete account → events appear in analytics and no unexpected errors appear in tracking | Run on production with the owner's approval | Critical |
+| LCH-05 | The shipped artifact completes its declared core journey in the target environment. For a SaaS product: land → sign up (email arrives) → onboard → core value action → upgrade/pay (entitlement immediate, receipt arrives) → log out and in → reset password → trigger a handled error → cancel → delete account → events appear in analytics and no unexpected errors appear in tracking. For a CLI: install the release artifact and run a representative task end to end. For a batch pipeline: process a fixture and reconcile the output. The core journey is whatever the blueprint or brief declares | Run on production (or the released artifact in its target environment) with the owner's approval | Critical |
 | LCH-06 | The core path works on a real phone on a cellular network | Device test | High |
 | LCH-07 | Production backups are running, and the first one exists (REL-13) | Backup status | Critical |
 | LCH-08 | Monitoring and alerting watch the production URLs, and a test alert reached a human (OBS-16) | Evidence | High |

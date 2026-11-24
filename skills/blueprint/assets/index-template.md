@@ -6,15 +6,15 @@ The foundation this project is built on: why it exists, who it serves, how it wi
 
 | # | Document | Establishes | Status | Approved |
 |---|---|---|---|---|
-| 1 | [vision.md](vision.md) | Core idea · insight · vision · philosophy · why us | Not started | |
-| 2 | [market.md](market.md) | Segments · size · alternatives · competitors · demand · beachhead · positioning · channels · defensibility | Not started | |
-| 3 | [business.md](business.md) | Model · pricing · unit economics · runway · sensitivity · targets | Not started | |
-| 4 | [product.md](product.md) | Users · user requirements · product requirements · quality bar · boundaries · success measures | Not started | |
-| 5 | [brand.md](brand.md) | Name · positioning · personality · voice · messaging · visual direction · assets | Not started | |
-| 6 | [stack.md](stack.md) | Stack · infrastructure · run cost · resources · constraints · secrets policy | Not started | |
-| 7 | [plan.md](plan.md) | Mission · phases · milestones · bets · risks · kill criteria · not yet | Not started | |
+| 1 | vision.md | Core idea · insight · vision · philosophy · why us | Not started | |
+| 2 | market.md | Segments · size · alternatives · competitors · demand · beachhead · positioning · channels · defensibility | Not started | |
+| 3 | business.md | Model · pricing · unit economics · runway · sensitivity · targets | Not started | |
+| 4 | product.md | Users · user requirements · product requirements · quality bar · boundaries · success measures | Not started | |
+| 5 | brand.md | Name · positioning · personality · voice · messaging · visual direction · assets | Not started | |
+| 6 | stack.md | Stack · infrastructure · run cost · resources · constraints · secrets policy | Not started | |
+| 7 | plan.md | Mission · phases · milestones · bets · risks · kill criteria · not yet | Not started | |
 
-Status is one of: Not started · Discuss · Research · Draft · Review · Approved. A reopened document returns to Discuss, with the reason in the workbook.
+Status is one of: Not started · Discuss · Research · Draft · Review · Approved. A reopened document returns to Discuss, with the reason in the workbook. **A Not started document is written without a link** — link it (`[vision.md](vision.md)`) only when the file exists, so the index never points at a missing file.
 
 - [workbook.md](workbook.md): open questions, decisions and their reasons, assumptions being validated, session notes.
 - [research/](research/): the evidence behind the documents, sourced and dated, including the runnable economic model.

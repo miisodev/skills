@@ -1,10 +1,10 @@
 ---
 name: blueprint
-description: "Establish a project's blueprint together with its owner: seven documents (vision, market, business, product, brand, stack, plan) holding the core idea, vision, philosophy, market research and strategy, business model, economics, targets, user and product requirements, brand, stack, infrastructure, resources and grand plan. It is collaborative and iterative, not one-shot. Each document is discussed, researched and computed, drafted, critiqued and approved by the owner, and progress is kept in a workbook so any later session can resume. The blueprint sets intent and leaves design, architecture, schemas, APIs and copy to the builder. Use it when starting, validating or planning a product, business or project idea; when resuming or revising a blueprint; when a project's market, pricing, requirements, brand, stack or plan changes; when replacing a bloated spec or PRD library; or when the user mentions a blueprint, business plan, PRD, product brief, brand brief, go-to-market, unit economics or roadmap."
+description: "Establish a project's blueprint together with its owner: seven documents (vision, market, business, product, brand, stack, plan) holding the core idea, market research and strategy, business model, targets, user and product requirements, brand, stack and plan. Collaborative and iterative, not one-shot: each document is discussed, researched, drafted and approved by the owner, with a workbook so any later session resumes. Sets intent and leaves design, architecture and copy to the builder. Use when starting or planning a product, business or project idea; when resuming or revising a blueprint; when market, pricing, requirements, brand, stack or plan change; when replacing a bloated spec or PRD library; or when the user mentions a blueprint, business plan, PRD, product brief, brand brief, go-to-market, unit economics or roadmap."
 license: MIT
 metadata:
   author: miisodev
-  version: "1.1.2"
+  version: "2.0.0"
 ---
 
 # Blueprint
@@ -47,7 +47,7 @@ An owner's decision that *looks* like design stays, stated as the requirement it
 
 **Where the folder lives is the project's choice, not this skill's.** Find an existing blueprint by looking for its index (a `README.md` listing the seven documents) or the documents themselves, wherever they are. If there is none, ask the owner where it should live, recommending the project's existing convention for agent context, or `blueprint/` at the root when there is no convention. Create `README.md` and `workbook.md` from `assets/index-template.md` and `assets/workbook-template.md` when the work begins.
 
-**What the skill does hold to is completeness.** The index lists all seven documents with a status each, every listed file exists, and nothing else in the folder claims to be intent. A missing document is shown as Not started, never left out.
+**What the skill does hold to is completeness.** The index lists all seven documents with a status each, every listed file exists once it is started, and nothing else in the folder claims to be intent. A document that does not exist yet is shown as Not started with no link — the index never links a missing file.
 
 The documents hold conclusions. The workbook holds the process. `research/` holds the evidence. Keeping them apart is what lets the documents stay short and decided while nothing that was learned is lost.
 
@@ -68,6 +68,12 @@ Each document moves through five stages. Record the current stage in the workboo
 3. **Draft.** Write the document from the discussion and evidence, to the standards below. Anything still undecided goes into the workbook as an open question with a recommended answer. It never goes into the document.
 4. **Review.** Critique the draft before the owner sees it as final: challenge it as a skeptical investor, an experienced operator and a target user would; check it against every approved document; run the sweeps in `references/review.md`. Then walk the owner through what the document commits them to and what you would push back on.
 5. **Approve.** The owner confirms, or sends it back to an earlier stage. Record the approval and the key decisions, with their rationale, in the workbook.
+
+### The brief mode — when seven documents is the wrong size
+
+For internal tools, open-source libraries, migrations, spikes and other work where the full cycle is ceremony, run the **brief**: a one-page intent document instead of the seven. The brief holds, in this order: the problem, the users or downstream consumers, the constraints, the non-goals, the measurable acceptance criteria, the owner, and the rollout or reversal conditions. Market research, brand and invented pricing are skipped, not faked — for an internal tool, time saved and maintenance cost are the economics that matter. An existing issue or RFC can be the brief's home.
+
+The brief is a real blueprint artifact with the same rules: discussed with the owner, approved, recorded in the workbook, and reopenable when intent changes. `references/brief.md` is its contract. The production audit accepts an approved brief as the requirements standard for its scope — and a typo fix should trigger neither the brief nor the seven documents.
 
 ### Order and reopening
 
@@ -119,5 +125,8 @@ When a project already has PRDs, specs, business plans or design docs, `referenc
 | `references/vision.md` … `references/plan.md` | Working on that document: what it must establish, what to learn from the owner, what to research, and what "done" looks like |
 | `references/research.md` | Any Research-and-compute stage: evidence standards, market sizing, competitor analysis, economic models |
 | `references/review.md` | Every Review stage, and whenever asked to check a blueprint |
+| `references/brief.md` | When a project needs one-page intent instead of the seven documents |
+| `references/compliance.md` | Establishing data, access and threat-modeling requirements with the owner |
+| `references/naming.md` | When the project needs a name and its availability checked |
 | `references/migration.md` | Adopting an existing spec library, PRD or business plan |
 | `assets/index-template.md`, `assets/workbook-template.md` | Creating the blueprint's `README.md` and `workbook.md` |

@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "product": {
     "name": "Archive Bridge (synthetic example)",
     "description": "Fictional local stdio MCP server for a document store. This payload demonstrates shape and gating; no real product was tested.",

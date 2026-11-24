@@ -18,7 +18,7 @@ Does the product do what it claims, correctly, for the people it is for? Every o
 | ID | Check | Verify | Severity |
 |---|---|---|---|
 | FUN-01 | A list of critical user journeys exists or has been derived (signup → core value action → return; purchase; the admin/operator journeys) | Requirements doc, blueprint, or derived list recorded in the report | High |
-| FUN-02 | Every "must" requirement (blueprint or equivalent) is met | Trace each to a working behaviour | Critical for core, High otherwise |
+| FUN-02 | Every "must" requirement (blueprint, brief or equivalent) is met. Musts carry stable IDs (`REQ-07: v2 reads v1 project files without data loss`) so each can be traced to its working behavior and evidence | Trace each to a working behaviour; link the REQ id to its check, surface and evidence | Critical for core, High otherwise |
 | FUN-03 | Every product claim on marketing, pricing and store pages is true today | Compare claims with behaviour, feature by feature | High |
 | FUN-04 | Plan and tier limits advertised match what the product enforces | Test at, below and above each limit | High |
 
@@ -52,4 +52,4 @@ Does the product do what it claims, correctly, for the people it is for? Every o
 
 ## Severity notes
 
-A broken core value action, wrong money arithmetic, or data loss in a critical journey is Critical and makes the check `core_flow: true`. A false marketing claim is at least High because it creates legal and trust exposure (see legal-audit). Where no requirements exist anywhere, record FUN-01 as a finding and audit against the derived list.
+A broken core value action, wrong money arithmetic, or data loss in a critical journey is Critical and makes the check `core_flow: true`. A false marketing claim is at least High because it creates legal and trust exposure (see legal-audit). Where no durable requirements standard exists anywhere (no blueprint, brief, PRD or spec — see `intent-discovery.md`), record FUN-01 as a finding that says so, audit against the derived list, and recommend running the blueprint skill or writing a brief.

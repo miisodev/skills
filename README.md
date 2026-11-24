@@ -4,13 +4,15 @@
 
 **Agent/LLM skills for engineering by miisodev**
 
+<img src="assets/social-preview.png" alt="Agent/LLM skills for engineering by miisodev" width="720">
+
 [![skills.sh](https://skills.sh/b/miisodev/skills?style=for-the-badge)](https://skills.sh/miisodev/skills)
 [![Release](https://img.shields.io/github/v/release/miisodev/skills?style=for-the-badge&labelColor=000000&color=0a0a0a)](https://github.com/miisodev/skills/releases)
 [![License: MIT](https://img.shields.io/github/license/miisodev/skills?style=for-the-badge&labelColor=000000&color=0a0a0a)](LICENSE)
 [![Sponsor](https://img.shields.io/github/sponsors/miisodev?style=for-the-badge&logo=githubsponsors&labelColor=000000&color=0a0a0a&label=Sponsor)](https://github.com/sponsors/miisodev)
 [![PayPal](https://img.shields.io/badge/Donate-PayPal-0a0a0a?style=for-the-badge&logo=paypal&labelColor=000000)](https://paypal.me/miisodev)
 
-**Latest version:** [v1.1.2](https://github.com/miisodev/skills/releases) — both skills ship in one version.
+**Latest version:** [v2.0.0](https://github.com/miisodev/skills/releases) — both skills ship in one version.
 
 ## What it is
 
@@ -20,10 +22,12 @@ Find [blueprint](https://mcprush.com/miisodev/blueprint), [production](https://m
 
 ## What it's for
 
+**When to use which:** starting or re-planning something → `blueprint`. About to ship, or judging what stands in the way → `production`. Both, in order: `blueprint` sets the intent, `production` checks the shipped product against it.
+
 | Skill | What it does | Try |
 |---|---|---|
-| [**blueprint**](skills/blueprint/SKILL.md) | Establishes a project's foundation together with you in seven documents: vision, market, business, product, brand, stack and plan. It covers the core idea, market research and strategy, the business model and unit economics, targets, requirements, brand, stack, resources and the grand plan. Each document is discussed, researched and computed, drafted, critiqued and approved by you, with a workbook so the work resumes in any session. It sets intent and leaves design and implementation to the model that builds. | "Let's blueprint this idea" · "Continue the blueprint" · "Our pricing changed, update the blueprint" · "Turn our PRDs into a blueprint" |
-| [**production**](skills/production/SKILL.md) | An autonomous readiness audit across 39 parts with 753 evidence-backed checks. It inventories surfaces, assesses applicable checks and returns a structured JSON payload and report ranking parts and surfaces by risk. Decisions are GO, GO WITH CONDITIONS, HOLD or NO-GO per surface and overall. | "Is this ready to launch?" · "Run a production readiness audit" · "Give me a go/no-go for the v2 release" · "Are these screens actually finished?" · "Audit this MCP server before release" |
+| [**blueprint**](skills/blueprint/SKILL.md) | Establishes a project's foundation together with you in seven documents: vision, market, business, product, brand, stack and plan. It covers the core idea, market research and strategy, the business model and unit economics, targets, requirements, brand, stack, resources and the grand plan. Each document is discussed, researched and computed, drafted, critiqued and approved by you, with a workbook so the work resumes in any session. It sets intent and leaves design and implementation to the model that builds. A brief mode gives internal tools, libraries and migrations one-page intent instead of the full cycle. | "Let's blueprint this idea" · "Continue the blueprint" · "Our pricing changed, update the blueprint" · "Turn our PRDs into a blueprint" |
+| [**production**](skills/production/SKILL.md) | An autonomous readiness audit across 39 parts with 753 evidence-backed checks. It inventories surfaces, assesses applicable checks and returns a structured JSON payload and report ranking parts and surfaces by risk. Decisions are GO, GO WITH CONDITIONS, HOLD or NO-GO per surface and overall; the audit is fail-closed — every expected check needs a recorded result, and a missing check holds the decision. A scoped run reports its decision for the audited scope only. | "Is this ready to launch?" · "Run a production readiness audit" · "Give me a go/no-go for the v2 release" · "Are these screens actually finished?" · "Audit this MCP server before release" |
 
 They work well together: the production audit finds the blueprint wherever the project keeps it, and its `product.md` becomes the requirements standard the audit checks against.
 

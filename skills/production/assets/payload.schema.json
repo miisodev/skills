@@ -1,12 +1,12 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "production-readiness-payload/1.0",
+  "$id": "production-readiness-payload/1.1",
   "title": "Production readiness payload",
-  "description": "What the auditing agent records. scripts/readiness.py validates it, computes scores, rankings and the decision, and renders the report.",
+  "description": "What the auditing agent records. scripts/readiness.py validates it, computes scores, rankings and the decision, and renders the report. Schema 1.1 adds conditional severity, evidence-required results, structured risk acceptance and scoped runs; the scorer still accepts 1.0 payloads with the 1.0 rules.",
   "type": "object",
   "required": ["schema_version", "product", "run", "surfaces", "checks"],
   "properties": {
-    "schema_version": {"const": "1.0"},
+    "schema_version": {"enum": ["1.0", "1.1"]},
     "product": {
       "type": "object",
       "required": ["name"],
@@ -27,6 +27,10 @@
         "parts_in_scope": {
           "description": "\"all\" (default) or the part ids this profile covers; other parts are reported as out of scope",
           "oneOf": [{"const": "all"}, {"type": "array", "items": {"$ref": "#/$defs/partId"}}]
+        },
+        "surfaces_in_scope": {
+          "description": "\"all\" (default) or the surface ids this run covers. A scoped run reports a decision for its scope only; it is never a whole-product readiness decision",
+          "oneOf": [{"const": "all"}, {"type": "array", "items": {"type": "string"}}]
         },
         "auditor": {"type": "string"},
         "environments_examined": {"type": "array", "items": {"type": "string"}},
@@ -61,7 +65,13 @@
           "id": {"$ref": "#/$defs/partId"},
           "applicable": {"type": "boolean"},
           "reason": {"type": "string"}
-        }
+        },
+        "allOf": [
+          {
+            "if": {"properties": {"applicable": {"const": false}}},
+            "then": {"required": ["reason"]}
+          }
+        ]
       }
     },
     "checks": {
@@ -76,10 +86,26 @@
           "status": {"enum": ["pass", "partial", "fail", "not_verified", "not_applicable"]},
           "severity": {"enum": ["critical", "high", "medium", "low"], "description": "Severity if the check is not passing, after applying the part's severity notes"},
           "core_flow": {"type": "boolean", "description": "The check protects auth, payment, the primary value action or data integrity"},
-          "evidence": {"type": "string", "description": "What was observed (command, output, file:line, measurement) or why it could not be verified / does not apply"},
+          "evidence": {"type": "string", "description": "What was observed (command, output, file:line, measurement) or why it could not be verified / does not apply. Required for pass/partial/fail in schema 1.1, and for not_applicable in every version (it is the reason)"},
           "evidence_type": {"enum": ["observed", "inferred", "documented"]},
-          "risk_accepted_by": {"type": ["string", "null"], "description": "Only when the owner has accepted the risk in writing"}
-        }
+          "risk_accepted_by": {"type": ["string", "null"], "description": "Schema 1.0 only: the owner accepted the risk in writing. Schema 1.1 uses risk_acceptance"},
+          "risk_acceptance": {
+            "type": "object",
+            "description": "Schema 1.1: the owner's written acceptance of an open fail/partial. Stays visible as a condition",
+            "required": ["by", "reference", "date"],
+            "properties": {
+              "by": {"type": "string", "description": "The person who accepted the risk"},
+              "reference": {"type": "string", "description": "Where the written acceptance is recorded"},
+              "date": {"type": "string", "format": "date"}
+            }
+          }
+        },
+        "allOf": [
+          {
+            "if": {"properties": {"status": {"enum": ["pass", "partial", "fail", "not_verified"]}}},
+            "then": {"required": ["severity"]}
+          }
+        ]
       }
     },
     "findings": {
@@ -91,7 +117,7 @@
           "id": {"type": "string"},
           "title": {"type": "string"},
           "severity": {"enum": ["critical", "high", "medium", "low"]},
-          "checks": {"type": "array", "items": {"type": "string"}},
+          "checks": {"type": "array", "items": {"type": "string"}, "description": "Check ids this finding covers: \"SEC-04\" (unique surface) or \"SEC-04@<surface>\" for a specific surface; each must have a recorded result"},
           "surfaces": {"type": "array", "items": {"type": "string"}},
           "evidence": {"type": "string"},
           "user_impact": {"type": "string"},

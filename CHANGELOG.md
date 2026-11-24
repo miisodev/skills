@@ -2,6 +2,32 @@
 
 All notable changes to these skills are documented here. Versions follow [Semantic Versioning](https://semver.org/): a major version changes a skill's structure or outputs in ways that break existing use, a minor version adds capability, and a patch fixes content.
 
+## [2.0.0] - 2026-11-24
+
+### production
+
+- **Fail-closed completeness:** the scorer derives the expected checks from the reference tables and the payload's surfaces; a check with no result is unassessed and holds the decision, `not_applicable` requires a reason, and a run with no assessed checks is NOT ASSESSED — never GO. **This changes decisions: an incomplete audit no longer reports GO.**
+- **Scope-qualified decisions:** `run.surfaces_in_scope` narrows a run to specific surfaces; a scoped result is marked as such in the decision, record and report title, and is never a whole-product readiness claim.
+- **`--fail-on NO_GO,HOLD,GO_WITH_CONDITIONS`** exit policy for CI (default exit 0 preserved for human runs).
+- **Registry parser** aligned to the full check-ID grammar (2–3 digit forms); 3-digit IDs no longer silently drop.
+- **Schema 1.1:** evidence required for pass/partial/fail; structured `risk_acceptance` (`by`, `reference`, `date`) replacing the free-text `risk_accepted_by`; findings reference checks as `ID` or `ID@surface`. Schema 1.0 payloads still score under the 1.0 rules.
+- **Remediate profile:** re-run a prior audit's failed, partial and unverified checks and produce a delta against the earlier result.
+- **Execution-safety preflight** for the auditor itself; evidence redaction ban; `run-playbook.md` (sub-agent part bundles, checkpoint/resume, delta comparison) and `intent-discovery.md` (the shared blueprint↔production contract).
+- Outcome-based rewrites: LCH-05 is the declared core journey in the target environment (SaaS example retained; CLI and pipeline variants named); DAT-07/PRF-13 judge sequential scans by workload and latency budget.
+- Two new examples: `mini-go-example-payload.json` (smallest complete passing audit) and `self-hosted-example-payload.json` (N/A patterns, non-core not_verified); the web-app example is now complete (every check recorded).
+
+### blueprint
+
+- **Brief mode:** a one-page intent artifact (problem, users, constraints, non-goals, acceptance criteria, owner, rollout/reversal) for internal tools, libraries, migrations and spikes — `references/brief.md`. No invented economics; the audit accepts an approved brief as the requirements standard.
+- **Compliance and threat modeling as requirements** — `references/compliance.md`: data, access and threat vectors established in `product.md` and `stack.md`, not an eighth document.
+- **Naming checklist** — `references/naming.md`: the owner-run registry checks with dated, class-scoped results.
+- Requirements carry stable REQ ids so each must traces to its behavior and evidence; the index template no longer links not-started documents.
+- The description is trimmed to 838 of the 1024-character budget; behavior and triggers unchanged.
+
+### Both skills
+
+- Both versions move to 2.0.0 together (schema and decision-semantics changes are breaking); plugin manifests for Anthropic's and OpenAI's directories bump with them.
+
 ## [1.1.2] - 2026-11-24
 
 ### Distribution

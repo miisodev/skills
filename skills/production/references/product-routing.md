@@ -1,6 +1,6 @@
 # Product and platform routing
 
-Select checks from capabilities, data and failure impact, not a product label. Start with functional, compatibility, engineering, security and launch; assess each other part for applicability. A component can have multiple surfaces. Apply identity to local privileges and device ownership as well as login screens. UX means developer/operator experience for headless products. No billing, marketing site, telemetry, account system, browser, cloud or particular stack is required.
+Select checks from capabilities, data and failure impact, not a product label. Start with functional, compatibility, engineering, security and launch; assess each other part for applicability. A component can have multiple surfaces. Apply identity to local privileges and device ownership as well as login screens. UX means developer/operator experience for headless products. No billing, marketing site, telemetry, account system, browser, cloud or particular stack is required. Scope profiles are defined in the skill (`pre-launch-gate`, `release-gate`, `full-audit`, `design-review`, `spot-audit`, `remediate`, `post-launch-health-check`); this reference decides which checks apply inside any of them, and `run.surfaces_in_scope` narrows a run to the surfaces in scope.
 
 Use this table to avoid missing specialized boundaries. The named parts are additions to applicable general parts, not exhaustive presets; use part IDs from the payload schema in `run.parts_in_scope`.
 

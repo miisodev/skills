@@ -44,10 +44,16 @@ for skill in skills:
 prod = ROOT / "skills" / "production"
 if prod.exists():
     defined, refs = set(), set()
+    # The full ID grammar (2-3 digit standard forms; custom C-forms are payload-local).
+    part_prefixes = {"FUN", "UX", "DES", "A11", "CON", "LOC", "CMP", "PRF", "REL", "OBS", "INF",
+                     "CST", "ENG", "SEC", "IDN", "DAT", "PRV", "SAF", "AIF", "API", "BIL", "MSG",
+                     "SUP", "ANL", "SEO", "BRD", "LGL", "MOB", "DSK", "EXT", "PKG", "LCH", "MCP",
+                     "AGT", "DEP", "SYN", "RTM", "DEV", "SCH"}
     for f in (prod / "references").glob("*-audit.md"):
         s = f.read_text(encoding="utf-8")
-        defined |= set(re.findall(r"^\| ([A-Z0-9]+-\d\d) \|", s, re.M))
-        refs |= set(re.findall(r"\b([A-Z][A-Z0-9]{1,3}-\d\d)\b", s))
+        defined |= set(re.findall(r"^\| ([A-Z][A-Z0-9]{1,3}-\d{2,3}) \|", s, re.M))
+        refs |= {x for x in re.findall(r"\b([A-Z][A-Z0-9]{1,3}-\d{2,3})\b", s)
+                 if x.split("-")[0] in part_prefixes}
     missing = sorted(refs - defined)
     if missing:
         errors.append(f"production: unresolved check references {missing}")
