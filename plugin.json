@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "miisodev-skills",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Agent/LLM skills for engineering by miisodev: blueprint, which establishes a project's foundation with its owner, and production, an autonomous production-readiness audit that returns a go/no-go with evidence.",
   "author": {
     "name": "miisodev",
@@ -46,7 +46,7 @@
         "logoDark": "./assets/plugin/logo-dark.png"
       },
       "publication": {
-        "release_notes": "v2.0.0: fail-closed audit completeness (a missing check holds the decision), scoped decisions, remediate profile, schema 1.1, blueprint brief mode and one-page naming/compliance references."
+        "release_notes": "v2.0.1: line-ending normalization per directory validation. v2.0.0: fail-closed audit completeness (a missing check holds the decision), scoped decisions, remediate profile, schema 1.1, blueprint brief mode and one-page naming/compliance references."
       }
     }
   }

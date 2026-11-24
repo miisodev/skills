@@ -2,6 +2,12 @@
 
 All notable changes to these skills are documented here. Versions follow [Semantic Versioning](https://semver.org/): a major version changes a skill's structure or outputs in ways that break existing use, a minor version adds capability, and a patch fixes content.
 
+## [2.0.1] - 2026-11-24
+
+### Both skills
+
+- Normalize the `.gitattributes` rule to `eol=lf` per Anthropic's plugin-directory validation, so installed files cannot differ from the validated source. No skill content changes; both versions move to 2.0.1 together.
+
 ## [2.0.0] - 2026-11-24
 
 ### production
