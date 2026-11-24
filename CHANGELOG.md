@@ -2,6 +2,12 @@
 
 All notable changes to these skills are documented here. Versions follow [Semantic Versioning](https://semver.org/): a major version changes a skill's structure or outputs in ways that break existing use, a minor version adds capability, and a patch fixes content.
 
+## [2.0.5] - 2026-11-24
+
+### Both skills
+
+- Recreate the README with nothing hidden and a clear hierarchy: every install path is open — the Claude Code plugin marketplace, the ChatGPT and Codex routes and the manual copy each get their own section instead of a collapsed dropdown. No skill content changes; both versions move to 2.0.5 together.
+
 ## [2.0.4] - 2026-11-24
 
 ### Both skills

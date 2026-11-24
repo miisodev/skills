@@ -13,9 +13,9 @@
 
 ## What it is
 
-Two agent skills as plain Markdown following the open [Agent Skills](https://agentskills.io/) specification, plus one standard-library Python script. They work in Claude Code, Codex, Cursor, Gemini CLI, GitHub Copilot, OpenCode, Windsurf and [every other agent the `skills` CLI supports](https://github.com/vercel-labs/skills#supported-agents). They are independent of stack, vendor and region. No account, no telemetry, no remote code.
+Two agent skills as plain Markdown on the open [Agent Skills](https://agentskills.io/) specification, plus one standard-library Python script. They work in Claude Code, Codex, Cursor, Gemini CLI, GitHub Copilot, OpenCode, Windsurf and [every other agent the `skills` CLI supports](https://github.com/vercel-labs/skills#supported-agents) — independent of stack, vendor and region. No account, no telemetry, no remote code.
 
-Find [blueprint](https://mcprush.com/miisodev/blueprint), [production](https://mcprush.com/miisodev/production) and [BrainLLM](https://mcprush.com/miisodev/brainllm-mcp) together on the [MCPRush publisher page](https://mcprush.com/miisodev). The commands below install the complete skill folders from this repository.
+[blueprint](https://mcprush.com/miisodev/blueprint), [production](https://mcprush.com/miisodev/production) and [BrainLLM](https://mcprush.com/miisodev/brainllm-mcp) are also together on the [MCPRush publisher page](https://mcprush.com/miisodev).
 
 ## What it's for
 
@@ -51,6 +51,8 @@ Apply these to the capabilities a product actually has. A static site does not n
 
 ## Quick setup
 
+Install both skills in any agent:
+
 ```bash
 npx skills add miisodev/skills
 ```
@@ -68,23 +70,22 @@ Install globally for a specific agent without prompts:
 npx skills add miisodev/skills --skill '*' -g -a claude-code -y
 ```
 
-**ChatGPT and Codex** — both work with the skills today: Codex installs the same skills folders (`~/.codex/skills/`), and ChatGPT can run any skill's instructions directly. The packaged plugin is in review for OpenAI's plugin directory; until it lists, the fastest route is the CLI.
-
 Update later with `npx skills update`.
 
-<details>
-<summary>Other ways to install</summary>
-
-**Claude Code plugin marketplace**
+### Claude Code plugin marketplace
 
 ```
 /plugin marketplace add miisodev/skills
 /plugin install miisodev-skills@miisodev-skills
 ```
 
-**Manually:** copy a folder from [`skills/`](skills) into your agent's skills directory (for example `.claude/skills/`, `.agents/skills/` or `~/.codex/skills/`).
+### ChatGPT and Codex
 
-</details>
+Both work with the skills today. Codex reads the same skills folders (`~/.codex/skills/`), and ChatGPT can run any skill's instructions directly. The packaged plugin is in review for OpenAI's plugin directory; until it lists, the CLI is the fastest route.
+
+### Manual install
+
+Copy a folder from [`skills/`](skills) into your agent's skills directory — for example `.claude/skills/`, `.agents/skills/` or `~/.codex/skills/`.
 
 ## Disclaimer
 
@@ -92,7 +93,7 @@ The `production` skill's legal, privacy, tax and accessibility-law material is a
 
 ## Access and support
 
-**Access** — the skills reach you from this repository through every one of these:
+**Access** — the skills reach you through every one of these:
 
 - [`npx skills add`](https://github.com/vercel-labs/skills) and the [MCPRush publisher page](https://mcprush.com/miisodev)
 - The [skills.sh listing](https://skills.sh/miisodev/skills)
