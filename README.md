@@ -1,7 +1,9 @@
 
 <img src="assets/social-preview.png" alt="Agent/LLM skills for engineering by miisodev" width="720">
 
-[![MCPRush](https://img.shields.io/badge/MCPRush-miisodev-0a0a0a?style=for-the-badge)](https://mcprush.com/miisodev)
+**Agent/LLM skills for engineering by miisodev**
+
+[![mcprush](https://img.shields.io/badge/MCPRush-miisodev-0a0a0a?style=for-the-badge)](https://mcprush.com/miisodev)
 [![skills.sh](https://skills.sh/b/miisodev/skills?style=for-the-badge)](https://skills.sh/miisodev/skills)
 [![Release](https://img.shields.io/github/v/release/miisodev/skills?style=for-the-badge&labelColor=000000&color=0a0a0a)](https://github.com/miisodev/skills/releases)
 [![License: MIT](https://img.shields.io/github/license/miisodev/skills?style=for-the-badge&labelColor=000000&color=0a0a0a)](LICENSE)
@@ -10,8 +12,6 @@
 
 - [GitHub Sponsors](https://github.com/sponsors/miisodev)
 - [PayPal](https://paypal.me/miisodev)
-
-Agent/LLM skills for engineering by miisodev
 
 ## What it is
 
@@ -74,7 +74,7 @@ npx skills add miisodev/skills --skill '*' -g -a claude-code -y
 
 Update later with `npx skills update`.
 
-### Claude Code plugin marketplace
+### Claude plugin marketplace
 
 ```
 /plugin marketplace add miisodev/skills
@@ -99,7 +99,7 @@ The `production` skill's legal, privacy, tax and accessibility-law material is a
 
 - [`npx skills add`](https://github.com/vercel-labs/skills) and the [MCPRush publisher page](https://mcprush.com/miisodev)
 - The [skills.sh listing](https://skills.sh/miisodev/skills)
-- The Claude Code plugin marketplace, and [Anthropic's plugin directory](https://claude.com/plugins) (submission in review)
+- The Claude plugin marketplace, and [Anthropic's plugin directory](https://claude.com/plugins) (submission in review)
 - The OpenAI plugin directory for ChatGPT and Codex (submission in review)
 - This repository, and [miiso.dev/skills](https://miiso.dev/skills) — the skills' homepage
 
