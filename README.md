@@ -1,9 +1,5 @@
 # skills
 
-<img src="assets/plugin/logo.png" alt="Miiso Skills mark" width="88">
-
-**Agent/LLM skills for engineering by miisodev**
-
 <img src="assets/social-preview.png" alt="Agent/LLM skills for engineering by miisodev" width="720">
 
 [![skills.sh](https://skills.sh/b/miisodev/skills?style=for-the-badge)](https://skills.sh/miisodev/skills)
