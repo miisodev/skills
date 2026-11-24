@@ -1,0 +1,53 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "miisodev-skills",
+  "version": "1.1.2",
+  "description": "Agent/LLM skills for engineering by miisodev: blueprint, which establishes a project's foundation with its owner, and production, an autonomous production-readiness audit that returns a go/no-go with evidence.",
+  "author": {
+    "name": "miisodev",
+    "email": "miisodev@gmail.com",
+    "url": "https://miiso.dev"
+  },
+  "homepage": "https://miiso.dev/skills",
+  "repository": "https://github.com/miisodev/skills",
+  "license": "MIT",
+  "keywords": [
+    "agents",
+    "llm",
+    "engineering",
+    "blueprint",
+    "production-readiness",
+    "audit"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Miiso Skills",
+        "shortDescription": "Agent skills for engineering",
+        "longDescription": "Two agent skills for building software products. blueprint establishes a project's foundation with its owner: the core idea, market, business model, product requirements, brand, stack and plan, in seven documents with a workbook so the work resumes in any session. production is an autonomous readiness audit: it inventories every surface, assesses every applicable check, and returns a structured go/no-go with the specific items that stand in the way. Both are plain Markdown on the open Agent Skills specification plus one standard-library Python scoring script. They run entirely on your machine: no accounts, no telemetry, no remote code.",
+        "developerName": "miisodev",
+        "category": "Developer Tools",
+        "capabilities": [
+          "Establish a project blueprint with its owner",
+          "Run a production-readiness audit with a go/no-go decision"
+        ],
+        "websiteURL": "https://miiso.dev/skills",
+        "supportURL": "https://github.com/miisodev/skills/issues",
+        "defaultPrompt": [
+          "Establish a blueprint for my project idea",
+          "Run a production readiness audit before I launch",
+          "What should I decide before I start building?"
+        ],
+        "brandColor": "#fd4c3f",
+        "brandColorDark": "#ff8c80",
+        "composerIcon": "./assets/plugin/composer-icon.png",
+        "composerIconDark": "./assets/plugin/composer-icon-dark.png",
+        "logo": "./assets/plugin/logo.png",
+        "logoDark": "./assets/plugin/logo-dark.png"
+      },
+      "publication": {
+        "release_notes": "Initial directory submission: blueprint 1.1.2 and production 1.1.2, one plugin."
+      }
+    }
+  }
+}

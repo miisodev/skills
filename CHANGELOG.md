@@ -2,6 +2,18 @@
 
 All notable changes to these skills are documented here. Versions follow [Semantic Versioning](https://semver.org/): a major version changes a skill's structure or outputs in ways that break existing use, a minor version adds capability, and a patch fixes content.
 
+## [1.1.2] - 2026-11-24
+
+### Distribution
+
+- Package the repository as one plugin for Anthropic's plugin directory (`.claude-plugin/plugin.json`) and OpenAI's plugin directory for ChatGPT and Codex (`plugin.json`, Agent Plugins format, with light and dark icons derived from the mark). Both validate locally; submission through the developer portals is the owner's act.
+- Restructure the README to mirror the [miiso.dev/skills](https://miiso.dev/skills) homepage — brand, tagline, latest version, access and sponsorship links, what the skills are, what they're for, quick setup, support — carrying the tagline "Agent/LLM skills for engineering by miisodev" across surfaces.
+- Welcome issues for suggestions, bugs and feedback, with pull requests still closed automatically; `CONTRIBUTING.md` updated to match.
+
+### Both skills
+
+- `blueprint` and `production` move to 1.1.2 together; no skill content changes in this release.
+
 ## [1.1.1] - 2026-11-18
 
 ### blueprint
