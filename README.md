@@ -8,7 +8,7 @@
 [![Sponsor](https://img.shields.io/github/sponsors/miisodev?style=for-the-badge&logo=githubsponsors&labelColor=000000&color=0a0a0a&label=Sponsor)](https://github.com/sponsors/miisodev)
 [![PayPal](https://img.shields.io/badge/Donate-PayPal-0a0a0a?style=for-the-badge&logo=paypal&labelColor=000000)](https://paypal.me/miisodev)
 
-**Latest version:** [v2.0.2](https://github.com/miisodev/skills/releases) — both skills ship in one version.
+**Latest version:** [v2.0.2](https://github.com/miisodev/skills/releases) — both skills ship in one version ([changelog](CHANGELOG.md)).
 
 ## What it is
 
@@ -67,6 +67,8 @@ Install globally for a specific agent without prompts:
 npx skills add miisodev/skills --skill '*' -g -a claude-code -y
 ```
 
+**ChatGPT and Codex** — both work with the skills today: Codex installs the same skills folders (`~/.codex/skills/`), and ChatGPT can run any skill's instructions directly. The packaged plugin is in review for OpenAI's plugin directory; until it lists, the fastest route is the CLI.
+
 Update later with `npx skills update`.
 
 <details>
@@ -83,14 +85,18 @@ Update later with `npx skills update`.
 
 </details>
 
+## Disclaimer
+
+The `production` skill's legal, privacy, tax and accessibility-law material is a starting map for engineering audits, not legal advice. Regulations and thresholds change. Confirm them with the regulator or counsel before relying on them. The audit is an engineering assessment, not a regulatory, functional-safety or platform certification. Its [source register](skills/production/references/standards-sources.md) records the expanded coverage baseline and how to check applicability/currentness. Review any skill before installing it.
+
 ## Access and support
 
 **Access** — the skills reach you from this repository through every one of these:
 
-- [`npx skills add`](https://github.com/vercel-labs/skills) and the [skills.sh listing](https://skills.sh/miisodev/skills)
+- [`npx skills add`](https://github.com/vercel-labs/skills) and the [MCPRush publisher page](https://mcprush.com/miisodev)
+- The [skills.sh listing](https://skills.sh/miisodev/skills)
 - The Claude Code plugin marketplace, and [Anthropic's plugin directory](https://claude.com/plugins) (submission in review)
 - The OpenAI plugin directory for ChatGPT and Codex (submission in review)
-- The [MCPRush publisher page](https://mcprush.com/miisodev)
 - This repository, and [miiso.dev/skills](https://miiso.dev/skills) — the skills' homepage
 
 **Support** — issues are welcome for suggestions, bugs and feedback. The author reads them and acts in his own design. Pull requests are closed automatically and are not accepted. The skills are MIT licensed: fork the repository and do whatever you like with your copy. Security reports are welcome privately (see [SECURITY.md](SECURITY.md)).
@@ -99,14 +105,6 @@ Update later with `npx skills update`.
 
 - [GitHub Sponsors](https://github.com/sponsors/miisodev)
 - [PayPal](https://paypal.me/miisodev)
-
-## Versioning
-
-Releases follow [Semantic Versioning](https://semver.org/) and are listed in the [changelog](CHANGELOG.md) and on [GitHub Releases](https://github.com/miisodev/skills/releases). Each skill's version is in its `SKILL.md` frontmatter (`metadata.version`).
-
-## Disclaimer
-
-The `production` skill's legal, privacy, tax and accessibility-law material is a starting map for engineering audits, not legal advice. Regulations and thresholds change. Confirm them with the regulator or counsel before relying on them. The audit is an engineering assessment, not a regulatory, functional-safety or platform certification. Its [source register](skills/production/references/standards-sources.md) records the expanded coverage baseline and how to check applicability/currentness. Review any skill before installing it.
 
 ## License
 
