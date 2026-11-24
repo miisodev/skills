@@ -1,4 +1,3 @@
-# skills
 
 <img src="assets/social-preview.png" alt="Agent/LLM skills for engineering by miisodev" width="720">
 
@@ -6,10 +5,13 @@
 [![skills.sh](https://skills.sh/b/miisodev/skills?style=for-the-badge)](https://skills.sh/miisodev/skills)
 [![Release](https://img.shields.io/github/v/release/miisodev/skills?style=for-the-badge&labelColor=000000&color=0a0a0a)](https://github.com/miisodev/skills/releases)
 [![License: MIT](https://img.shields.io/github/license/miisodev/skills?style=for-the-badge&labelColor=000000&color=0a0a0a)](LICENSE)
-[![Sponsor](https://img.shields.io/github/sponsors/miisodev?style=for-the-badge&logo=githubsponsors&labelColor=000000&color=0a0a0a&label=Sponsor)](https://github.com/sponsors/miisodev)
-[![PayPal](https://img.shields.io/badge/Donate-PayPal-0a0a0a?style=for-the-badge&logo=paypal&labelColor=000000)](https://paypal.me/miisodev)
 
-**Latest version:** the [Release badge](https://github.com/miisodev/skills/releases) above — both skills always ship in one version ([changelog](CHANGELOG.md)).
+**Sponsorship** — if these skills save you time, you can support further work:
+
+- [GitHub Sponsors](https://github.com/sponsors/miisodev)
+- [PayPal](https://paypal.me/miisodev)
+
+Agent/LLM skills for engineering by miisodev
 
 ## What it is
 
@@ -102,11 +104,6 @@ The `production` skill's legal, privacy, tax and accessibility-law material is a
 - This repository, and [miiso.dev/skills](https://miiso.dev/skills) — the skills' homepage
 
 **Support** — issues are welcome for suggestions, bugs and feedback. The author reads them and acts in his own design. Pull requests are closed automatically and are not accepted. The skills are MIT licensed: fork the repository and do whatever you like with your copy. Security reports are welcome privately (see [SECURITY.md](SECURITY.md)).
-
-**Sponsorship** — if these skills save you time, you can support further work:
-
-- [GitHub Sponsors](https://github.com/sponsors/miisodev)
-- [PayPal](https://paypal.me/miisodev)
 
 ## License
 
